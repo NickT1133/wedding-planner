@@ -25,46 +25,87 @@
     font-family: 'DM Sans', sans-serif;
     background: var(--bg);
     color: var(--text);
-    padding: 40px 24px 80px;
     line-height: 1.6;
   }
-  .wrap { max-width: 800px; margin: 0 auto; }
+
+  /* NAV */
+  nav {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0 24px;
+  }
+  .nav-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    padding: 14px 16px 14px 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border);
+    margin-right: 4px;
+  }
+  .nav-link {
+    padding: 14px 14px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    flex-shrink: 0;
+  }
+  .nav-link:hover { color: var(--text); }
+  .nav-link.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+  /* CONTENT */
+  .wrap { max-width: 800px; margin: 0 auto; padding: 32px 24px 80px; }
+  .page { display: none; }
+  .page.active { display: block; }
+
   h1 {
     font-family: 'Cormorant Garamond', serif;
     font-size: 2.2rem;
     font-weight: 700;
     margin-bottom: 4px;
   }
-  .subtitle {
-    font-size: 0.85rem;
-    color: var(--muted);
-    margin-bottom: 8px;
-  }
+  .subtitle { font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; }
   .countdown {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.4rem;
     font-weight: 600;
     color: var(--accent);
-    margin-bottom: 32px;
+    margin-bottom: 12px;
   }
-  .updated {
-    font-size: 0.75rem;
-    color: var(--muted);
-    margin-bottom: 32px;
-  }
+  .updated { font-size: 0.75rem; color: var(--muted); margin-bottom: 32px; }
 
   .section-title {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.3rem;
     font-weight: 600;
     color: var(--text);
-    margin: 36px 0 14px;
+    margin: 32px 0 14px;
     padding-bottom: 6px;
     border-bottom: 2px solid var(--border);
   }
+  .section-title:first-child { margin-top: 0; }
   .section-title.priorities { border-color: var(--accent); color: var(--accent); }
-  .section-title.done { border-color: var(--green); color: var(--green); }
   .section-title.food { border-color: var(--gold); color: var(--gold); }
+  .section-title.green { border-color: var(--green); color: var(--green); }
 
   .card {
     background: var(--card);
@@ -74,111 +115,7 @@
     margin-bottom: 12px;
   }
 
-  /* Status table */
-  .status-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-  .status-table th {
-    text-align: left;
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    padding: 8px 12px;
-    border-bottom: 2px solid var(--border);
-  }
-  .status-table td {
-    padding: 10px 12px;
-    border-bottom: 1px solid #f0ece4;
-    vertical-align: top;
-  }
-  .status-table tr:last-child td { border-bottom: none; }
-  .badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-size: 0.78rem;
-    font-weight: 600;
-  }
-  .badge-done { background: var(--green-light); color: var(--green); }
-  .badge-wip { background: var(--gold-light); color: var(--gold); }
-  .badge-todo { background: #fce8e8; color: var(--red); }
-  .owner { font-size: 0.8rem; color: var(--muted); }
-
-  /* Priority list */
-  .priority-list { list-style: none; padding: 0; }
-  .priority-list li {
-    padding: 10px 0;
-    border-bottom: 1px solid #f0ece4;
-    font-size: 0.95rem;
-  }
-  .priority-list li:last-child { border-bottom: none; }
-  .priority-list strong { color: var(--accent); }
-
-  /* Checklist */
-  .checklist { list-style: none; padding: 0; }
-  .checklist li {
-    padding: 6px 0;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  .check { color: var(--muted); flex-shrink: 0; }
-
-  /* Food table */
-  .food-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-  .food-table th {
-    text-align: left;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    padding: 8px 10px;
-    border-bottom: 2px solid var(--border);
-  }
-  .food-table td {
-    padding: 8px 10px;
-    border-bottom: 1px solid #f0ece4;
-  }
-
-  /* Schedule table */
-  .sched-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-  .sched-table td {
-    padding: 8px 12px;
-    border-bottom: 1px solid #f0ece4;
-    vertical-align: top;
-  }
-  .sched-table .time {
-    font-weight: 600;
-    color: var(--accent);
-    white-space: nowrap;
-    width: 80px;
-  }
-
-  /* Timeline */
-  .timeline-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-  .timeline-table td {
-    padding: 10px 12px;
-    border-bottom: 1px solid #f0ece4;
-    vertical-align: top;
-  }
-  .timeline-table .month {
-    font-weight: 600;
-    white-space: nowrap;
-    width: 100px;
-  }
-
-  p, li { font-size: 0.92rem; }
-  .note { font-size: 0.82rem; color: var(--muted); font-style: italic; margin-top: 8px; }
-  .sub { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
-  h3 { font-size: 1rem; font-weight: 600; margin: 16px 0 8px; }
-  ul { padding-left: 20px; }
-  ul li { margin-bottom: 4px; font-size: 0.9rem; }
-
-  .stats {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 24px;
-  }
+  .stats { display: flex; gap: 12px; margin-bottom: 24px; }
   .stat {
     background: var(--card);
     border: 1px solid var(--border);
@@ -187,23 +124,98 @@
     text-align: center;
     flex: 1;
   }
-  .stat-val {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.8rem;
-    font-weight: 700;
-  }
+  .stat-val { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 700; }
   .stat-val.green { color: var(--green); }
   .stat-val.gold { color: var(--gold); }
   .stat-val.red { color: var(--red); }
   .stat-lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+
+  /* Status table */
+  .status-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .status-table th {
+    text-align: left; font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted); padding: 8px 12px;
+    border-bottom: 2px solid var(--border);
+  }
+  .status-table td { padding: 10px 12px; border-bottom: 1px solid #f0ece4; vertical-align: top; }
+  .status-table tr:last-child td { border-bottom: none; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.78rem; font-weight: 600; }
+  .badge-done { background: var(--green-light); color: var(--green); }
+  .badge-wip { background: var(--gold-light); color: var(--gold); }
+  .badge-todo { background: #fce8e8; color: var(--red); }
+  .owner { font-size: 0.8rem; color: var(--muted); }
+
+  /* Filter buttons */
+  .filters { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .filter-btn {
+    padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.78rem;
+    font-weight: 500; border: 1.5px solid var(--border); border-radius: 20px;
+    background: var(--card); color: var(--muted); cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn.active { background: var(--accent-light); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+
+  .priority-list { list-style: none; padding: 0; }
+  .priority-list li { padding: 10px 0; border-bottom: 1px solid #f0ece4; font-size: 0.95rem; }
+  .priority-list li:last-child { border-bottom: none; }
+  .priority-list strong { color: var(--accent); }
+
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { padding: 6px 0; font-size: 0.9rem; display: flex; align-items: flex-start; gap: 8px; }
+  .check { color: var(--muted); flex-shrink: 0; }
+
+  .food-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .food-table th {
+    text-align: left; font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted); padding: 8px 10px;
+    border-bottom: 2px solid var(--border);
+  }
+  .food-table td { padding: 8px 10px; border-bottom: 1px solid #f0ece4; }
+
+  .sched-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .sched-table td { padding: 8px 12px; border-bottom: 1px solid #f0ece4; vertical-align: top; }
+  .sched-table .time { font-weight: 600; color: var(--accent); white-space: nowrap; width: 80px; }
+
+  .timeline-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .timeline-table td { padding: 10px 12px; border-bottom: 1px solid #f0ece4; vertical-align: top; }
+  .timeline-table .month { font-weight: 600; white-space: nowrap; width: 100px; }
+
+  h3 { font-size: 1rem; font-weight: 600; margin: 16px 0 8px; }
+  ul { padding-left: 20px; }
+  ul li { margin-bottom: 4px; font-size: 0.9rem; }
+  p { font-size: 0.92rem; }
+  .note { font-size: 0.82rem; color: var(--muted); font-style: italic; margin-top: 8px; }
+  .sub { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+
+  @media (max-width: 600px) {
+    .stats { flex-direction: column; }
+    .nav-brand { font-size: 0.95rem; padding-right: 12px; }
+    .nav-link { padding: 12px 10px; font-size: 0.78rem; }
+  }
 </style>
 </head>
 <body>
+
+<nav>
+<div class="nav-inner">
+  <span class="nav-brand">Wedding Planner</span>
+  <a class="nav-link active" onclick="showPage('overview')">Overview</a>
+  <a class="nav-link" onclick="showPage('checklist')">Checklist</a>
+  <a class="nav-link" onclick="showPage('food')">Food &amp; Drinks</a>
+  <a class="nav-link" onclick="showPage('venue')">Venue &amp; Decor</a>
+  <a class="nav-link" onclick="showPage('dayof')">Day-Of</a>
+  <a class="nav-link" onclick="showPage('timeline')">Timeline</a>
+</div>
+</nav>
+
 <div class="wrap">
 
-<h1>Wedding Planner</h1>
-<p class="subtitle">Backyard Celebration &middot; July 25, 2026 &middot; ~90-100 Guests</p>
-<p class="subtitle">Afternoon party 4:00-9:30 PM &middot; Private ceremony precedes party</p>
+<!-- ============ OVERVIEW ============ -->
+<div class="page active" id="page-overview">
+
+<h1>July 25, 2026</h1>
+<p class="subtitle">Backyard Celebration &middot; ~90-100 Guests &middot; 4:00-9:30 PM</p>
 <div class="countdown" id="countdown"></div>
 <p class="updated">Last updated: March 28, 2026</p>
 
@@ -213,77 +225,17 @@
   <div class="stat"><div class="stat-val red">35</div><div class="stat-lbl">To Do</div></div>
 </div>
 
-<!-- PRIORITIES -->
 <div class="section-title priorities">Immediate Priorities</div>
 <div class="card">
 <ul class="priority-list">
-  <li><strong>Finish website + send invitations</strong> — invitations arriving soon, target send by 4/1. Set RSVP deadline: May 31.</li>
+  <li><strong>Finish website + send invitations</strong> — arriving soon, target send by 4/1. RSVP deadline: May 31.</li>
   <li><strong>Book porta potties</strong> — almost done, just need to finalize payment</li>
-  <li><strong>Hotel block</strong> — working with hotel rep, may pivot to recommendations instead</li>
-  <li><strong>Buy wedding bands</strong> — custom/sized rings can take 4-8 weeks</li>
-  <li><strong>Get Nick's suit</strong> — order this month, allow time for fittings in May</li>
+  <li><strong>Hotel block</strong> — working with hotel rep, may pivot to recommendations</li>
+  <li><strong>Buy wedding bands</strong> — custom/sized rings take 4-8 weeks</li>
+  <li><strong>Get Nick's suit</strong> — order this month, fittings in May</li>
 </ul>
 </div>
 
-<!-- STATUS AT A GLANCE -->
-<div class="section-title">Status at a Glance</div>
-<div class="card" style="overflow-x: auto;">
-<table class="status-table">
-<thead><tr><th>Item</th><th>Status</th><th>Owner</th></tr></thead>
-<tbody>
-<tr><td>Save the dates</td><td><span class="badge badge-done">Done</span></td><td class="owner">Both</td></tr>
-<tr><td>Tents / tables / chairs</td><td><span class="badge badge-done">Done</span> Rented</td><td class="owner">Both</td></tr>
-<tr><td>Tent lights</td><td><span class="badge badge-done">Done</span> Rented</td><td class="owner">Both</td></tr>
-<tr><td>Invitations</td><td><span class="badge badge-wip">In Progress</span> Ordered, arriving soon. Send by 4/1</td><td class="owner">Both</td></tr>
-<tr><td>Wedding website</td><td><span class="badge badge-wip">In Progress</span> Almost done — 6 tasks remaining</td><td class="owner">Both</td></tr>
-<tr><td>Hotel block</td><td><span class="badge badge-wip">In Progress</span> Working with hotel rep</td><td class="owner">Nick</td></tr>
-<tr><td>Nick's suit</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Nick</td></tr>
-<tr><td>Wedding bands</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Gown alterations</td><td><span class="badge badge-done">Done</span> Jamie handling</td><td class="owner">Jamie</td></tr>
-<tr><td>Shoes</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Jamie</td></tr>
-<tr><td>Jewelry</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Jamie</td></tr>
-<tr><td>Quiet generator</td><td><span class="badge badge-todo">To Do</span> Research rental options</td><td class="owner">Nick</td></tr>
-<tr><td>Outdoor speakers</td><td><span class="badge badge-wip">In Progress</span> On hand, need to test</td><td class="owner">Nick</td></tr>
-<tr><td>Additional lighting plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Porta potties</td><td><span class="badge badge-wip">In Progress</span> Almost finalized</td><td class="owner">Jamie</td></tr>
-<tr><td>Officiant</td><td><span class="badge badge-done">Done</span> Confirmed</td><td class="owner">Nick</td></tr>
-<tr><td>Photography</td><td><span class="badge badge-done">Done</span> Friend with camera + shared album TBD</td><td class="owner">Both</td></tr>
-<tr><td>Map property + ceremony area</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Table / seating layout</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Dance floor / rugs</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Grazing table layout</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Chafing dishes</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Ice plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Refrigeration plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Costco food list</td><td><span class="badge badge-wip">In Progress</span> Draft only</td><td class="owner">Both</td></tr>
-<tr><td>Alcohol (beer + wine)</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Coffee situation</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Dessert</td><td><span class="badge badge-wip">In Progress</span> Exploring local bakery + Costco options</td><td class="owner">Both</td></tr>
-<tr><td>Plates / napkins / utensils</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Food replenishment person</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Trash / recycling / compost plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Fire extinguisher</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Day-of emergency kit</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Borrowed items list</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Firewood</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Favors</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Marriage license</td><td><span class="badge badge-todo">To Do</span> Get in June (valid 60 days)</td><td class="owner">Both</td></tr>
-<tr><td>Vows</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Decor plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Playlists</td><td><span class="badge badge-wip">In Progress</span> Building on Spotify</td><td class="owner">Both</td></tr>
-<tr><td>Yard games / activities</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Photo booth setup</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Night before plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Brunch after plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Family sleeping logistics</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Night of wedding plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
-<tr><td>Day-of work schedule</td><td><span class="badge badge-wip">In Progress</span> Draft started</td><td class="owner">Both</td></tr>
-<tr><td>Storm plan</td><td><span class="badge badge-todo">To Do</span> Draft below</td><td class="owner">Both</td></tr>
-</tbody>
-</table>
-</div>
-
-<!-- WEBSITE -->
 <div class="section-title">Website — Remaining Tasks</div>
 <div class="card">
 <ul class="checklist">
@@ -296,135 +248,83 @@
 </ul>
 </div>
 
-<!-- ATTIRE -->
-<div class="section-title">Attire &amp; Personal</div>
-<div class="card">
-  <h3>Nick's Suit</h3>
-  <ul>
-    <li>Order or purchase this month — allow time for tailoring</li>
-    <li>Confirm fit 4-6 weeks before (late June)</li>
-  </ul>
-  <h3>Shoes</h3>
-  <ul>
-    <li>Order Jamie's shoes soon — allow time to break them in</li>
-  </ul>
-  <h3>Jewelry</h3>
-  <ul>
-    <li>Finalize what Jamie's wearing (earrings, necklace, bracelet, hairpiece)</li>
-    <li>Check if anything is borrowed — coordinate with the lender</li>
-  </ul>
-  <h3>Vows</h3>
-  <ul>
-    <li>Start drafting now — revise several times</li>
-    <li>Decide: traditional, personal, or a mix?</li>
-    <li>Print final copies + backup on phone</li>
-  </ul>
 </div>
 
-<!-- VENUE LAYOUT -->
-<div class="section-title">Venue Layout &amp; Setup</div>
-<div class="card">
-  <h3>Map the Property</h3>
-  <ul>
-    <li>Ceremony area, tent/reception area, parking, porta potties (downwind), trash station, fire pit area, yard games zone, photo booth</li>
-    <li>Get aerial view and overlay tent placements + table layout</li>
-  </ul>
-  <h3>Ceremony Area</h3>
-  <ul>
-    <li>Decide exact spot — consider sun angle at 4 PM in July, wind, noise</li>
-    <li>Mark with simple signage or florals on the day</li>
-  </ul>
-  <h3>Table Layout</h3>
-  <ul>
-    <li>Map tables for 90-100 guests</li>
-    <li>Long family tables vs. rounds, head table, kids table</li>
-    <li>Food/grazing table, bar table, gift/card table, dessert table</li>
-    <li>Clear pathways to food and restrooms</li>
-    <li>Map food placement on each table — serving flow and replenishment access</li>
-  </ul>
-  <h3>Dance Floor &amp; Rugs</h3>
-  <ul>
-    <li>Level ground, away from water</li>
-    <li>Outdoor rugs to define the space</li>
-    <li>Speaker placement nearby</li>
-  </ul>
-  <h3>Grazing Table</h3>
-  <ul>
-    <li>Sketch layout: cheese, fruit, crackers, charcuterie, dips</li>
-    <li>Varying heights for visual interest</li>
-    <li>Keep in shade — cheese melts fast</li>
-  </ul>
+<!-- ============ CHECKLIST ============ -->
+<div class="page" id="page-checklist">
+
+<div class="section-title">All Items</div>
+
+<div class="filters">
+  <button class="filter-btn active" onclick="filterRows('all', this)">All</button>
+  <button class="filter-btn" onclick="filterRows('done', this)">Done</button>
+  <button class="filter-btn" onclick="filterRows('wip', this)">In Progress</button>
+  <button class="filter-btn" onclick="filterRows('todo', this)">To Do</button>
+  <button class="filter-btn" onclick="filterRows('nick', this)">Nick</button>
+  <button class="filter-btn" onclick="filterRows('jamie', this)">Jamie</button>
 </div>
 
-<!-- DECOR -->
-<div class="section-title">Decor &amp; Atmosphere</div>
-<div class="card">
-  <h3>Decor Plan</h3>
-  <ul>
-    <li>Inventory: what you have, borrowing, and need to buy</li>
-    <li>Categories: centerpieces, ceremony backdrop/arch, signage, tablecloths/runners, candles/lanterns, florals</li>
-  </ul>
-  <h3>Lighting</h3>
-  <ul>
-    <li>Tent lights rented (done)</li>
-    <li>String lights on trees, candles/votives on tables, pathway lighting, fire pit as ambient light</li>
-  </ul>
-  <h3>Playlists (4 needed)</h3>
-  <ul>
-    <li>Ceremony (processional, recessional, prelude)</li>
-    <li>Cocktail/snack hour (upbeat, not too loud)</li>
-    <li>Dinner (mellow, conversational)</li>
-    <li>Evening/dancing (higher energy)</li>
-  </ul>
-  <p class="sub">Download offline. Assign someone to manage the music day-of.</p>
-  <h3>Yard Games</h3>
-  <ul>
-    <li>Cornhole, bocce, horseshoes, giant Jenga, KanJam, lawn bowling</li>
-    <li>Assign someone to set out and manage</li>
-  </ul>
-  <h3>Photo Booth</h3>
-  <ul>
-    <li>Old iPhone on a mount, shaded spot, fun background</li>
-    <li>Booth app for auto-capture, QR code for shared album</li>
-  </ul>
-  <h3>Favors</h3>
-  <ul>
-    <li>Ideas: local honey, seed packets, small candles, jam</li>
-    <li>Set up take-one display near exit or on tables</li>
-  </ul>
+<div class="card" style="overflow-x: auto;">
+<table class="status-table" id="checklist-table">
+<thead><tr><th>Item</th><th>Status</th><th>Owner</th></tr></thead>
+<tbody>
+<tr data-status="done" data-owner="both"><td>Save the dates</td><td><span class="badge badge-done">Done</span></td><td class="owner">Both</td></tr>
+<tr data-status="done" data-owner="both"><td>Tents / tables / chairs</td><td><span class="badge badge-done">Done</span> Rented</td><td class="owner">Both</td></tr>
+<tr data-status="done" data-owner="both"><td>Tent lights</td><td><span class="badge badge-done">Done</span> Rented</td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Invitations</td><td><span class="badge badge-wip">In Progress</span> Ordered, send by 4/1</td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Wedding website</td><td><span class="badge badge-wip">In Progress</span> 6 tasks remaining</td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="nick"><td>Hotel block</td><td><span class="badge badge-wip">In Progress</span> Working with hotel rep</td><td class="owner">Nick</td></tr>
+<tr data-status="todo" data-owner="nick"><td>Nick's suit</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Nick</td></tr>
+<tr data-status="todo" data-owner="both"><td>Wedding bands</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="done" data-owner="jamie"><td>Gown alterations</td><td><span class="badge badge-done">Done</span> Jamie handling</td><td class="owner">Jamie</td></tr>
+<tr data-status="todo" data-owner="jamie"><td>Shoes</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Jamie</td></tr>
+<tr data-status="todo" data-owner="jamie"><td>Jewelry</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Jamie</td></tr>
+<tr data-status="todo" data-owner="nick"><td>Quiet generator</td><td><span class="badge badge-todo">To Do</span> Research rental</td><td class="owner">Nick</td></tr>
+<tr data-status="wip" data-owner="nick"><td>Outdoor speakers</td><td><span class="badge badge-wip">In Progress</span> On hand, need to test</td><td class="owner">Nick</td></tr>
+<tr data-status="todo" data-owner="both"><td>Additional lighting plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="jamie"><td>Porta potties</td><td><span class="badge badge-wip">In Progress</span> Almost finalized</td><td class="owner">Jamie</td></tr>
+<tr data-status="done" data-owner="nick"><td>Officiant</td><td><span class="badge badge-done">Done</span> Confirmed</td><td class="owner">Nick</td></tr>
+<tr data-status="done" data-owner="both"><td>Photography</td><td><span class="badge badge-done">Done</span> Shared album TBD</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Map property + ceremony area</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Table / seating layout</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Dance floor / rugs</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Grazing table layout</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Chafing dishes</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Ice plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Refrigeration plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Costco food list</td><td><span class="badge badge-wip">In Progress</span> Draft only</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Alcohol (beer + wine)</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Coffee situation</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Dessert</td><td><span class="badge badge-wip">In Progress</span> Exploring options</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Plates / napkins / utensils</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Food replenishment person</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Trash / recycling / compost</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Fire extinguisher</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Emergency kit</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Borrowed items list</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Firewood</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Favors</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Marriage license</td><td><span class="badge badge-todo">To Do</span> June (valid 60 days)</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Vows</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Decor plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Playlists</td><td><span class="badge badge-wip">In Progress</span> Spotify</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Yard games / activities</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Photo booth</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Night before plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Brunch after plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Family sleeping logistics</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Night of wedding plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Day-of work schedule</td><td><span class="badge badge-wip">In Progress</span> Draft started</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Storm plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+</tbody>
+</table>
 </div>
 
-<!-- GEAR -->
-<div class="section-title">Gear &amp; Equipment</div>
-<div class="card">
-  <h3>Quiet Generator</h3>
-  <ul>
-    <li>Inverter/quiet generator required — standard ones are too loud</li>
-    <li>Options: Honda EU2200i, Honda EU3000is, Yamaha EF2200iS</li>
-    <li>Power needs: 1,500-2,500W minimum</li>
-    <li>Rent locally or buy (good resale). Get 2x 50ft outdoor extension cords.</li>
-  </ul>
-  <h3>Speakers</h3>
-  <ul>
-    <li>Weather-resistant, projecting to ~100 people outdoors</li>
-    <li>Options: QSC K12.2, Bose L1 Compact, or local rental</li>
-    <li>Test full chain (generator + speakers + playlist) at least 1 week before</li>
-  </ul>
-  <h3>Porta Potties</h3>
-  <ul>
-    <li>2-3 units for 90-100 guests over 5-6 hours</li>
-    <li>At least 1 ADA-accessible unit</li>
-    <li>Delivery day before, pickup day after</li>
-    <li>Place downwind, out of sightlines. Confirm handwashing station.</li>
-  </ul>
-  <h3>Refrigeration</h3>
-  <ul>
-    <li>What needs cold: beer, wine, salads, cut fruit, charcuterie</li>
-    <li>Large insulated coolers + dedicated food safety coolers</li>
-  </ul>
 </div>
 
-<!-- FOOD -->
+<!-- ============ FOOD & DRINKS ============ -->
+<div class="page" id="page-food">
+
 <div class="section-title food">Food &amp; Beverage Plan</div>
 <div class="card">
 <p class="note">Flow: arrival snacks + grazing table (4:30) &rarr; dinner (~5:30) &rarr; dessert (~7:00) &rarr; drinks all night</p>
@@ -441,7 +341,7 @@
 <tr><td>Fruit platter</td><td>4-5 trays</td><td>Pre-made</td><td>Day before</td></tr>
 <tr><td>Cheese &amp; charcuterie</td><td>3-4 boards</td><td>Grazing table, room temp</td><td>Day before</td></tr>
 <tr><td>Crackers + bread</td><td>4-5 boxes</td><td>Pair with cheese + dips</td><td>Day before</td></tr>
-<tr><td>Dips (hummus, tzatziki, etc.)</td><td>3-4 containers</td><td>Keep cold until setup</td><td>Day before</td></tr>
+<tr><td>Dips (hummus, tzatziki)</td><td>3-4 containers</td><td>Keep cold until setup</td><td>Day before</td></tr>
 <tr><td>Plates, napkins, utensils</td><td>150+ sets</td><td>Go heavy, you'll run out</td><td>2 weeks before</td></tr>
 <tr><td>Wine (red + white)</td><td>25-30 bottles</td><td>~2 glasses/person</td><td>1 week before</td></tr>
 <tr><td>Beer (cases)</td><td>8-12 cases</td><td>Mix lager + IPA</td><td>1 week before</td></tr>
@@ -452,51 +352,152 @@
 </table>
 </div>
 
-<!-- LOGISTICS -->
-<div class="section-title">Logistics &amp; Facilities</div>
+<div class="section-title">Grazing Table</div>
 <div class="card">
-  <h3>Chafing Dish Plan</h3>
-  <ul>
-    <li>6-8 full-size units (rent or disposable aluminum)</li>
-    <li>Pre-heat 30 min before service. Hot food above 140F, cold below 40F.</li>
-    <li>Sterno fuel: 2-3 boxes + spare</li>
-  </ul>
-  <h3>Trash / Recycling / Compost</h3>
-  <ul>
-    <li>Clearly labeled stations</li>
-    <li>Someone does trash rounds every 45-60 min</li>
-    <li>Extra bags + staging area for full bags</li>
-  </ul>
-  <h3>Fire Extinguisher</h3>
-  <ul><li>1 ABC extinguisher near generator, food area, and fire pit</li></ul>
-  <h3>Emergency Kit</h3>
-  <p>Safety pins, Tide To Go, pain relievers, band-aids, phone chargers, needle &amp; thread, fashion tape, baby wipes, antacids, sunscreen, bug spray, bobby pins, Sharpie</p>
-  <h3>Borrowed Items</h3>
-  <p>Track: Item | Borrowed from | Return by when</p>
+<ul>
+  <li>Artisan cheeses, crackers, charcuterie, fruit, nuts, dips, olives, honey</li>
+  <li>Varying heights (boards, stands, crates) for visual interest</li>
+  <li>Keep in shade — cheese melts fast in July</li>
+  <li>Assign 1 person to set up and refresh during the party</li>
+</ul>
 </div>
 
-<!-- STORM PLAN -->
-<div class="section-title">Storm Plan</div>
+<div class="section-title">Chafing Dish &amp; Ice Logistics</div>
 <div class="card">
-  <p>No indoor backup. Tents are the plan: one 20x40, one 10x20, two 10x10 = 1,200 sq ft total. Fits 90-100 seated.</p>
-  <h3>Risk Levels</h3>
-  <ul>
-    <li><strong>Light rain:</strong> Tents handle it. Keep going.</li>
-    <li><strong>Heavy rain:</strong> Move fully under tents, close sides.</li>
-    <li><strong>Thunder/lightning:</strong> Shelter under tents, pause until it passes.</li>
-    <li><strong>Major storm:</strong> Monitor conditions. Consider postponing if severe.</li>
-  </ul>
-  <h3>Prep</h3>
-  <ul>
-    <li>Confirm tent sides are in the rental</li>
-    <li>Weather monitoring from 10 days out; go/no-go at 48 hours</li>
-    <li>Assign weather watcher day-of (NOAA every 30 min)</li>
-    <li>Secure lightweight decor (weights, clips, stakes)</li>
-  </ul>
+<h3>Chafing Dishes</h3>
+<ul>
+  <li>6-8 full-size units (rent or disposable aluminum)</li>
+  <li>Pre-heat 30 min before service</li>
+  <li>Hot food above 140F, cold below 40F — bring a food thermometer</li>
+  <li>Sterno fuel: 2-3 boxes + spare</li>
+</ul>
+<h3>Ice Plan</h3>
+<ul>
+  <li>Assign 1 person as ice + cooler lead — manages refills all night</li>
+  <li>Separate coolers for drinks vs. food safety</li>
+  <li>150-200 lbs, bought morning-of</li>
+</ul>
+<h3>Food Replenishment</h3>
+<ul>
+  <li>Assign 1-2 food leads — monitor and replenish throughout night</li>
+  <li>Brief them: where food is stored, what order to bring things out</li>
+  <li>Key moments: snacks to dinner transition, dessert, late-night refresh</li>
+</ul>
 </div>
 
-<!-- DAY-OF SCHEDULE -->
-<div class="section-title">Day-of Schedule</div>
+<div class="section-title">Coffee &amp; Dessert</div>
+<div class="card">
+<h3>Coffee</h3>
+<ul>
+  <li>Options: large coffee urn (30-60 cup), cold brew concentrate + pitchers, or skip</li>
+  <li>If yes: regular + decaf, cream/sugar station, assign someone to manage</li>
+</ul>
+<h3>Dessert</h3>
+<ul>
+  <li>Exploring: local bakery items and/or Costco sheet cake(s)</li>
+  <li>Decision TBD</li>
+</ul>
+</div>
+
+</div>
+
+<!-- ============ VENUE & DECOR ============ -->
+<div class="page" id="page-venue">
+
+<div class="section-title">Property Layout</div>
+<div class="card">
+<h3>Map the Property</h3>
+<ul>
+  <li>Ceremony area, tent/reception area, parking, porta potties (downwind), trash station, fire pit, yard games zone, photo booth</li>
+  <li>Get aerial view and overlay tent placements + table layout</li>
+</ul>
+<h3>Ceremony Area</h3>
+<ul>
+  <li>Decide exact spot — consider sun angle at 4 PM in July, wind, noise</li>
+  <li>Mark with signage or florals on the day</li>
+</ul>
+<h3>Table Layout</h3>
+<ul>
+  <li>90-100 guests</li>
+  <li>Long family tables vs. rounds, head table, kids table</li>
+  <li>Food/grazing table, bar table, gift/card table, dessert table</li>
+  <li>Clear pathways to food and restrooms</li>
+  <li>Map food placement per table — serving flow and replenishment access</li>
+</ul>
+<h3>Dance Floor &amp; Rugs</h3>
+<ul>
+  <li>Level ground, away from water</li>
+  <li>Outdoor rugs to define the space</li>
+  <li>Speaker placement nearby</li>
+</ul>
+</div>
+
+<div class="section-title">Decor &amp; Lighting</div>
+<div class="card">
+<h3>Decor Plan</h3>
+<ul>
+  <li>Inventory: what you have, borrowing, and need to buy</li>
+  <li>Centerpieces, ceremony backdrop/arch, signage, tablecloths/runners, candles/lanterns, florals</li>
+</ul>
+<h3>Lighting</h3>
+<ul>
+  <li>Tent lights rented (done)</li>
+  <li>String lights on trees, candles/votives on tables, pathway lighting, fire pit</li>
+</ul>
+<h3>Favors</h3>
+<ul>
+  <li>Ideas: local honey, seed packets, small candles, jam</li>
+  <li>Take-one display near exit or on tables</li>
+</ul>
+</div>
+
+<div class="section-title">Entertainment</div>
+<div class="card">
+<h3>Playlists (4 needed)</h3>
+<ul>
+  <li>Ceremony — processional, recessional, prelude</li>
+  <li>Cocktail/snack hour — upbeat, not too loud</li>
+  <li>Dinner — mellow, conversational</li>
+  <li>Evening/dancing — higher energy</li>
+</ul>
+<p class="sub">Download offline. Assign someone to manage music day-of.</p>
+<h3>Yard Games</h3>
+<ul><li>Cornhole, bocce, horseshoes, giant Jenga, KanJam, lawn bowling</li></ul>
+<h3>Photo Booth</h3>
+<ul>
+  <li>Old iPhone on a mount, shaded spot, fun background</li>
+  <li>Booth app for auto-capture, QR code for shared album</li>
+</ul>
+</div>
+
+<div class="section-title">Gear &amp; Equipment</div>
+<div class="card">
+<h3>Quiet Generator</h3>
+<ul>
+  <li>Inverter/quiet type required — Honda EU2200i, EU3000is, or Yamaha EF2200iS</li>
+  <li>1,500-2,500W minimum. Rent locally or buy. 2x 50ft outdoor extension cords.</li>
+</ul>
+<h3>Speakers</h3>
+<ul>
+  <li>Weather-resistant, projecting to ~100 people outdoors</li>
+  <li>QSC K12.2, Bose L1 Compact, or local rental</li>
+  <li>Test full chain (generator + speakers + playlist) 1 week before</li>
+</ul>
+<h3>Porta Potties</h3>
+<ul>
+  <li>2-3 units, at least 1 ADA-accessible</li>
+  <li>Delivery day before, pickup day after. Confirm handwashing station.</li>
+</ul>
+<h3>Refrigeration</h3>
+<ul><li>Large insulated coolers for drinks + separate food safety coolers</li></ul>
+</div>
+
+</div>
+
+<!-- ============ DAY-OF ============ -->
+<div class="page" id="page-dayof">
+
+<div class="section-title priorities">Day-of Schedule</div>
 <div class="card">
 <table class="sched-table">
 <tr><td class="time">8:00 AM</td><td>Setup crew — tent layout, tables, chairs, decor, signage</td></tr>
@@ -509,68 +510,148 @@
 <tr><td class="time">3:30 PM</td><td>Close family gathers for private ceremony</td></tr>
 <tr><td class="time">4:00 PM</td><td>Ceremony — close family only, ~30 min</td></tr>
 <tr><td class="time">4:30 PM</td><td>Guests arrive — snacks + drinks out</td></tr>
-<tr><td class="time">5:30 PM</td><td>Dinner service from chafing dishes</td></tr>
-<tr><td class="time">7:00 PM</td><td>Dessert + coffee (if serving)</td></tr>
+<tr><td class="time">5:30 PM</td><td>Dinner service</td></tr>
+<tr><td class="time">7:00 PM</td><td>Dessert + coffee</td></tr>
 <tr><td class="time">Dusk</td><td>Fire pit lit, string lights on</td></tr>
-<tr><td class="time">9:30 PM</td><td>Cleanup begins — borrowed items rounded up</td></tr>
+<tr><td class="time">9:30 PM</td><td>Cleanup begins</td></tr>
 </table>
-<h3 style="margin-top: 16px;">Roles to Assign</h3>
+</div>
+
+<div class="section-title">Roles to Assign</div>
+<div class="card">
 <ul>
-  <li>Setup lead, Food + catering lead (2), Drinks lead, AV + tech lead, Ice lead, Grazing table lead, Cleanup lead, Weather watcher</li>
+  <li><strong>Setup lead</strong> — owns morning setup flow</li>
+  <li><strong>Food + catering lead</strong> (2 people) — chafing dishes, warming, serving, replenishment</li>
+  <li><strong>Drinks lead</strong> — coolers, ice, restocking</li>
+  <li><strong>AV + tech lead</strong> — generator, speakers, playlist, photo booth</li>
+  <li><strong>Ice lead</strong> — morning pickup, cooler management</li>
+  <li><strong>Grazing table lead</strong> — setup and refresh</li>
+  <li><strong>Cleanup lead</strong> — end-of-night teardown</li>
+  <li><strong>Weather watcher</strong> — NOAA check every 30 min</li>
 </ul>
 </div>
 
-<!-- EVENTS -->
-<div class="section-title">Events Around the Wedding</div>
+<div class="section-title">Storm Plan</div>
 <div class="card">
-  <h3>Night Before</h3>
-  <ul>
-    <li>Casual dinner or rehearsal gathering — keep low-key</li>
-    <li>Confirm who's staying on-site, assign morning setup tasks</li>
-  </ul>
-  <h3>Brunch After</h3>
-  <ul>
-    <li>Host at home, local restaurant, or potluck</li>
-    <li>Keep it simple — you'll be exhausted</li>
-  </ul>
-  <h3>Family Sleeping Logistics</h3>
-  <ul>
-    <li>Who sleeps where night before AND night of?</li>
-    <li>Coordinate hotel rooms for family</li>
-  </ul>
-  <h3>Night of Wedding</h3>
-  <ul>
-    <li>Delegate cleanup to someone else explicitly</li>
-    <li>Pack overnight bag the night before</li>
-  </ul>
+<p>No indoor backup. Tents are the plan: one 20x40, one 10x20, two 10x10 = 1,200 sq ft total. Fits 90-100 seated.</p>
+<h3>Risk Levels</h3>
+<ul>
+  <li><strong>Light rain:</strong> Tents handle it. Keep going.</li>
+  <li><strong>Heavy rain:</strong> Move under tents, close sides.</li>
+  <li><strong>Thunder/lightning:</strong> Shelter, pause until it passes.</li>
+  <li><strong>Major storm:</strong> Monitor conditions. Consider postponing if severe.</li>
+</ul>
+<h3>Prep</h3>
+<ul>
+  <li>Confirm tent sides are in the rental</li>
+  <li>Weather monitoring from 10 days out; go/no-go at 48 hours</li>
+  <li>Assign weather watcher day-of</li>
+  <li>Secure lightweight decor (weights, clips, stakes)</li>
+</ul>
 </div>
 
-<!-- TIMELINE -->
-<div class="section-title">Month-by-Month Timeline</div>
+<div class="section-title">Emergency Kit</div>
+<div class="card">
+<p>Safety pins, Tide To Go, pain relievers, band-aids, phone chargers + power bank, needle &amp; thread, fashion tape, baby wipes, antacids, sunscreen, bug spray, bobby pins, hair ties, Sharpie</p>
+</div>
+
+</div>
+
+<!-- ============ TIMELINE ============ -->
+<div class="page" id="page-timeline">
+
+<div class="section-title">Month-by-Month</div>
 <div class="card">
 <table class="timeline-table">
 <tr><td class="month">March</td><td>Send invitations (website first) &middot; Book porta potties &middot; Hotel block &middot; Wedding bands &middot; Nick's suit &middot; Research generator + speakers &middot; Draft food list</td></tr>
 <tr><td class="month">April</td><td>Confirm hotel &middot; Reserve generator + speakers &middot; Suit fittings &middot; Gown fitting &middot; Map property + ceremony area &middot; Table layout &middot; Decide favors</td></tr>
 <tr><td class="month">May</td><td>RSVP deadline (May 31) &middot; Finalize food list &middot; Chafing dishes &middot; Ice + fridge plan &middot; Day-of schedule + roles &middot; Write vows &middot; Build playlists &middot; Plan night-before + brunch</td></tr>
 <tr><td class="month">June</td><td>Marriage license &middot; Final headcount &middot; Final food + alcohol order &middot; Confirm all rentals &middot; Final gown fitting &middot; Decor + borrowed items &middot; Test AV &middot; Build emergency kit</td></tr>
-<tr><td class="month">Jul 1-24</td><td>Store run (2 days before) &middot; Ice + firewood (morning of) &middot; Weather check + go/no-go (48 hrs) &middot; Delegate setup &middot; Pack overnight bag</td></tr>
+<tr><td class="month">Jul 1-24</td><td>Store run (2 days before) &middot; Ice + firewood (morning of) &middot; Weather go/no-go (48 hrs) &middot; Delegate setup &middot; Pack overnight bag</td></tr>
 <tr><td class="month" style="color: var(--accent);">Jul 25</td><td style="color: var(--accent); font-weight: 600;">Ceremony ~4:00 PM &middot; Party 4:30-9:30 PM</td></tr>
 </table>
 </div>
 
-<p style="text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 40px;">Auto-generated from Nick's vault</p>
+<div class="section-title">Attire &amp; Personal</div>
+<div class="card">
+<h3>Nick's Suit</h3>
+<ul>
+  <li>Order this month — allow time for tailoring</li>
+  <li>Confirm fit 4-6 weeks before (late June)</li>
+</ul>
+<h3>Jamie's Shoes</h3>
+<ul><li>Order soon — allow time to break them in</li></ul>
+<h3>Jewelry</h3>
+<ul>
+  <li>Finalize what Jamie's wearing</li>
+  <li>Check if anything is borrowed</li>
+</ul>
+<h3>Vows</h3>
+<ul>
+  <li>Start drafting — revise several times</li>
+  <li>Traditional, personal, or a mix?</li>
+  <li>Print final copies + phone backup</li>
+</ul>
+</div>
+
+<div class="section-title">Events Around the Wedding</div>
+<div class="card">
+<h3>Night Before</h3>
+<ul><li>Casual dinner or gathering — keep low-key. Confirm who's on-site, assign morning tasks.</li></ul>
+<h3>Brunch After</h3>
+<ul><li>Host at home, local restaurant, or potluck. Keep it simple.</li></ul>
+<h3>Family Sleeping</h3>
+<ul><li>Map out who sleeps where night before and night of. Coordinate hotel rooms.</li></ul>
+<h3>Night of Wedding</h3>
+<ul><li>Delegate cleanup explicitly. Pack overnight bag night before.</li></ul>
+</div>
+
+<div class="section-title">Hotel Accommodations</div>
+<div class="card">
+<ul>
+  <li>Working with hotel rep — may pivot to recommendations instead of a block</li>
+  <li>15-20 rooms needed</li>
+  <li>Include info on invitations + website</li>
+  <li>Follow up 6 weeks before to check pickup</li>
+</ul>
+</div>
 
 </div>
+
+</div><!-- end .wrap -->
+
 <script>
 // Countdown
 const wedding = new Date('2026-07-25T16:00:00');
 function updateCountdown() {
   const now = new Date();
-  const diff = wedding - now;
-  const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+  const days = Math.ceil((wedding - now) / (1000 * 60 * 60 * 24));
   document.getElementById('countdown').textContent = days + ' days to go';
 }
 updateCountdown();
+
+// Page navigation
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// Checklist filter
+function filterRows(filter, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#checklist-table tbody tr').forEach(row => {
+    const status = row.dataset.status;
+    const owner = row.dataset.owner;
+    if (filter === 'all') { row.style.display = ''; return; }
+    if (filter === 'nick') { row.style.display = (owner === 'nick' || owner === 'both') ? '' : 'none'; return; }
+    if (filter === 'jamie') { row.style.display = (owner === 'jamie' || owner === 'both') ? '' : 'none'; return; }
+    row.style.display = status === filter ? '' : 'none';
+  });
+}
 </script>
 </body>
 </html>
