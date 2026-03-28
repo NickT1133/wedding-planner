@@ -277,14 +277,14 @@
 <nav>
 <div class="nav-inner">
   <span class="nav-brand">Wedding Planner</span>
-  <a class="nav-link active" onclick="showPage('overview')">Overview</a>
-  <a class="nav-link" onclick="showPage('checklist')">Checklist</a>
-  <a class="nav-link" onclick="showPage('food')">Food</a>
-  <a class="nav-link" onclick="showPage('venue')">Venue</a>
-  <a class="nav-link" onclick="showPage('packing')">Packing</a>
-  <a class="nav-link" onclick="showPage('dayof')">Day-Of</a>
-  <a class="nav-link" onclick="showPage('timeline')">Timeline</a>
-  <a class="nav-link" onclick="showPage('music')">Music</a>
+  <a class="nav-link active" data-page="overview">Overview</a>
+  <a class="nav-link" data-page="checklist">Checklist</a>
+  <a class="nav-link" data-page="food">Food</a>
+  <a class="nav-link" data-page="venue">Venue</a>
+  <a class="nav-link" data-page="packing">Packing</a>
+  <a class="nav-link" data-page="dayof">Day-Of</a>
+  <a class="nav-link" data-page="timeline">Timeline</a>
+  <a class="nav-link" data-page="music">Music</a>
 </div>
 </nav>
 
@@ -357,12 +357,12 @@
 <div class="section-title">All Items</div>
 
 <div class="filters">
-  <button class="filter-btn active" onclick="filterRows('all', this)">All</button>
-  <button class="filter-btn" onclick="filterRows('done', this)">Done</button>
-  <button class="filter-btn" onclick="filterRows('wip', this)">In Progress</button>
-  <button class="filter-btn" onclick="filterRows('todo', this)">To Do</button>
-  <button class="filter-btn" onclick="filterRows('nick', this)">Nick</button>
-  <button class="filter-btn" onclick="filterRows('jamie', this)">Jamie</button>
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="done">Done</button>
+  <button class="filter-btn" data-filter="wip">In Progress</button>
+  <button class="filter-btn" data-filter="todo">To Do</button>
+  <button class="filter-btn" data-filter="nick">Nick</button>
+  <button class="filter-btn" data-filter="jamie">Jamie</button>
 </div>
 
 <div class="card" style="overflow-x: auto;">
@@ -616,62 +616,62 @@
 <div class="section-title">Packing Bins</div>
 <p style="font-size: 0.92rem; color: var(--muted); margin-bottom: 16px;">Everything gets packed into labeled bins the day before. Morning-of, the crew just unloads and sets up. Click any bin to expand.</p>
 
-<div class="accordion" onclick="toggleAcc(this)">
+<div class="accordion">
   <div class="accordion-header"><span class="acc-title">Bin 1: AV &amp; Tech</span><span class="acc-meta"><span class="acc-count">9 items</span><span class="acc-arrow">&#9662;</span></span></div>
   <div class="accordion-body"><p class="sub">Pack night before. AV lead sets up at 9:00 AM.</p><ul class="checklist"><li><span class="check">&#9744;</span> Quiet generator (rented or purchased)</li><li><span class="check">&#9744;</span> Outdoor extension cords (2x 50ft)</li><li><span class="check">&#9744;</span> Speakers</li><li><span class="check">&#9744;</span> Speaker cables / connectors</li><li><span class="check">&#9744;</span> Old phone with playlists downloaded offline</li><li><span class="check">&#9744;</span> Bluetooth pairing tested with speakers</li><li><span class="check">&#9744;</span> Microphone (for toasts/announcements)</li><li><span class="check">&#9744;</span> Power strip / surge protector</li><li><span class="check">&#9744;</span> Backup phone charger / power bank</li></ul></div>
 </div>
 
-<div class="accordion" onclick="toggleAcc(this)">
+<div class="accordion">
   <div class="accordion-header"><span class="acc-title">Bin 2: Photo Booth &amp; Slideshow</span><span class="acc-meta"><span class="acc-count">10 items</span><span class="acc-arrow">&#9662;</span></span></div>
   <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Old iPhone for photo booth + mount/tripod</li><li><span class="check">&#9744;</span> Booth app installed and tested</li><li><span class="check">&#9744;</span> Fun background (banner, string lights, florals)</li><li><span class="check">&#9744;</span> Props (optional)</li><li><span class="check">&#9744;</span> Printed QR code sign — shared Google Photos album</li><li><span class="check">&#9744;</span> Monitor/TV for slideshow under tent</li><li><span class="check">&#9744;</span> HDMI cable or Chromecast / Apple TV</li><li><span class="check">&#9744;</span> Phone/device feeding slideshow</li><li><span class="check">&#9744;</span> Power cable for monitor</li><li><span class="check">&#9744;</span> Charger / power bank for booth phone</li></ul></div>
 </div>
 
-<div class="accordion" onclick="toggleAcc(this)">
+<div class="accordion">
   <div class="accordion-header"><span class="acc-title">Bin 3: Ceremony</span><span class="acc-meta"><span class="acc-count">8 items</span><span class="acc-arrow">&#9662;</span></span></div>
   <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Printed vows (2 copies each + phone backup)</li><li><span class="check">&#9744;</span> Vows sign (keepsake/decor piece)</li><li><span class="check">&#9744;</span> Ceremony arch / backdrop</li><li><span class="check">&#9744;</span> Ceremony florals / arrangements</li><li><span class="check">&#9744;</span> Aisle markers or signage</li><li><span class="check">&#9744;</span> Marriage license (get in June!)</li><li><span class="check">&#9744;</span> Pen for signing license</li><li><span class="check">&#9744;</span> Tissues</li></ul></div>
 </div>
 
-<div class="accordion" onclick="toggleAcc(this)">
+<div class="accordion">
   <div class="accordion-header"><span class="acc-title">Bin 4: Tablecloths &amp; Decor</span><span class="acc-meta"><span class="acc-count">12 items</span><span class="acc-arrow">&#9662;</span></span></div>
   <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Tablecloths / runners for all tables</li><li><span class="check">&#9744;</span> Table centerpieces</li><li><span class="check">&#9744;</span> Candles / battery-powered votives</li><li><span class="check">&#9744;</span> Welcome sign</li><li><span class="check">&#9744;</span> Seating chart / table assignment sign</li><li><span class="check">&#9744;</span> Menu sign / food labels</li><li><span class="check">&#9744;</span> Bar sign / drink labels</li><li><span class="check">&#9744;</span> Gift/card table sign + card box</li><li><span class="check">&#9744;</span> No gifts / no registry sign</li><li><span class="check">&#9744;</span> Borrowed decor items (track separately)</li><li><span class="check">&#9744;</span> Weights / clips for wind</li><li><span class="check">&#9744;</span> Tape, zip ties, scissors, twine</li></ul></div>
 </div>
 
-<div class="accordion" onclick="toggleAcc(this)">
+<div class="accordion">
   <div class="accordion-header"><span class="acc-title">Bin 5: Plates, Napkins &amp; Utensils</span><span class="acc-meta"><span class="acc-count">9 items</span><span class="acc-arrow">&#9662;</span></span></div>
   <div class="accordion-body"><p class="sub">Buy 2 weeks before. Count: 150+ of everything.</p><ul class="checklist"><li><span class="check">&#9744;</span> Dinner plates</li><li><span class="check">&#9744;</span> Dessert / appetizer plates</li><li><span class="check">&#9744;</span> Cups</li><li><span class="check">&#9744;</span> Wine glasses (if not using cups)</li><li><span class="check">&#9744;</span> Napkins (dinner + cocktail size)</li><li><span class="check">&#9744;</span> Forks, knives, spoons</li><li><span class="check">&#9744;</span> Serving spoons / tongs / spatulas</li><li><span class="check">&#9744;</span> Serving platters / trays</li><li><span class="check">&#9744;</span> Cutting boards for grazing table</li></ul></div>
 </div>
 
-<div class="accordion" onclick="toggleAcc(this)">
+<div class="accordion">
   <div class="accordion-header"><span class="acc-title">Bin 6: Grazing Table</span><span class="acc-meta"><span class="acc-count">6 items</span><span class="acc-arrow">&#9662;</span></span></div>
   <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Large boards / platters (varying sizes)</li><li><span class="check">&#9744;</span> Elevated stands / crates for height</li><li><span class="check">&#9744;</span> Small serving bowls for dips, olives, nuts</li><li><span class="check">&#9744;</span> Cheese knives / spreaders</li><li><span class="check">&#9744;</span> Small signs / labels</li><li><span class="check">&#9744;</span> Serving tongs / picks</li></ul></div>
 </div>
 
-<div class="accordion" onclick="toggleAcc(this)">
+<div class="accordion">
   <div class="accordion-header"><span class="acc-title">Bin 7: Bar &amp; Drinks Setup</span><span class="acc-meta"><span class="acc-count">7 items</span><span class="acc-arrow">&#9662;</span></span></div>
   <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Bottle openers / wine openers (multiple)</li><li><span class="check">&#9744;</span> Ice buckets / tubs for bottles</li><li><span class="check">&#9744;</span> Drink napkins</li><li><span class="check">&#9744;</span> Drink cups</li><li><span class="check">&#9744;</span> Coolers for beer + white wine</li><li><span class="check">&#9744;</span> Bar table: tablecloth + signage</li><li><span class="check">&#9744;</span> Non-alcoholic option signage</li></ul></div>
 </div>
 
-<div class="accordion" onclick="toggleAcc(this)">
+<div class="accordion">
   <div class="accordion-header"><span class="acc-title">Bin 8: Hot Food Supplies</span><span class="acc-meta"><span class="acc-count">8 items</span><span class="acc-arrow">&#9662;</span></span></div>
   <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Chafing dishes (6-8 full-size)</li><li><span class="check">&#9744;</span> Sterno fuel cans (2-3 boxes + spares)</li><li><span class="check">&#9744;</span> Lighter / long matches</li><li><span class="check">&#9744;</span> Serving utensils for each dish</li><li><span class="check">&#9744;</span> Food thermometer</li><li><span class="check">&#9744;</span> Aluminum foil</li><li><span class="check">&#9744;</span> Oven mitts / heat-resistant gloves</li><li><span class="check">&#9744;</span> Food labels / warming labels</li></ul></div>
 </div>
 
-<div class="accordion" onclick="toggleAcc(this)">
+<div class="accordion">
   <div class="accordion-header"><span class="acc-title">Bin 9: Games &amp; Activities</span><span class="acc-meta"><span class="acc-count">6 items</span><span class="acc-arrow">&#9662;</span></span></div>
   <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Cornhole boards + bags</li><li><span class="check">&#9744;</span> Bocce set</li><li><span class="check">&#9744;</span> Horseshoes</li><li><span class="check">&#9744;</span> Giant Jenga</li><li><span class="check">&#9744;</span> KanJam</li><li><span class="check">&#9744;</span> Any other games</li></ul></div>
 </div>
 
-<div class="accordion" onclick="toggleAcc(this)">
+<div class="accordion">
   <div class="accordion-header"><span class="acc-title">Bin 10: Fire Pit &amp; Lighting</span><span class="acc-meta"><span class="acc-count">7 items</span><span class="acc-arrow">&#9662;</span></span></div>
   <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Firewood (buy 1-2 days before)</li><li><span class="check">&#9744;</span> Fire starter / kindling</li><li><span class="check">&#9744;</span> Lighter / long matches</li><li><span class="check">&#9744;</span> Extra string lights</li><li><span class="check">&#9744;</span> Pathway lights / luminaries</li><li><span class="check">&#9744;</span> Extension cords for lights</li><li><span class="check">&#9744;</span> Candle lighters for table candles</li></ul></div>
 </div>
 
-<div class="accordion" onclick="toggleAcc(this)">
+<div class="accordion">
   <div class="accordion-header"><span class="acc-title">Bin 11: Trash &amp; Cleanup</span><span class="acc-meta"><span class="acc-count">8 items</span><span class="acc-arrow">&#9662;</span></span></div>
   <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Large trash bags (2 boxes)</li><li><span class="check">&#9744;</span> Recycling bags</li><li><span class="check">&#9744;</span> Compost bags</li><li><span class="check">&#9744;</span> Printed station signs: TRASH / RECYCLING / COMPOST</li><li><span class="check">&#9744;</span> Tape or stands for signs</li><li><span class="check">&#9744;</span> Extra paper towels</li><li><span class="check">&#9744;</span> Spray cleaner for spills</li><li><span class="check">&#9744;</span> Staging area identified for full bags</li></ul></div>
 </div>
 
-<div class="accordion" onclick="toggleAcc(this)">
+<div class="accordion">
   <div class="accordion-header"><span class="acc-title">Bin 12: Emergency Kit</span><span class="acc-meta"><span class="acc-count">14 items</span><span class="acc-arrow">&#9662;</span></span></div>
   <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Safety pins (various sizes)</li><li><span class="check">&#9744;</span> Stain remover pen (Tide To Go)</li><li><span class="check">&#9744;</span> Ibuprofen + acetaminophen</li><li><span class="check">&#9744;</span> Band-aids + basic first aid</li><li><span class="check">&#9744;</span> Phone chargers + power bank</li><li><span class="check">&#9744;</span> Needle and thread (gown + suit colors)</li><li><span class="check">&#9744;</span> Double-sided tape / fashion tape</li><li><span class="check">&#9744;</span> Baby wipes</li><li><span class="check">&#9744;</span> Antacids / Pepto</li><li><span class="check">&#9744;</span> Sunscreen</li><li><span class="check">&#9744;</span> Bug spray</li><li><span class="check">&#9744;</span> Extra bobby pins + hair ties</li><li><span class="check">&#9744;</span> Sharpie + scissors</li><li><span class="check">&#9744;</span> ABC fire extinguisher</li></ul></div>
 </div>
@@ -679,27 +679,27 @@
 <!-- DAY-OF CHECKLISTS -->
 <div class="section-title food" style="margin-top: 36px;">Day-Of Checklists</div>
 
-<div class="accordion" onclick="toggleAcc(this)">
+<div class="accordion">
   <div class="accordion-header"><span class="acc-title">Cold Food (prep day before)</span><span class="acc-meta"><span class="acc-count">9 items</span><span class="acc-arrow">&#9662;</span></span></div>
   <div class="accordion-body"><p class="sub">Store in coolers or fridge overnight. Transport cold morning-of.</p><ul class="checklist"><li><span class="check">&#9744;</span> Caesar salad kits (6-8 bags) — toss day-of</li><li><span class="check">&#9744;</span> Veggie platters (4-5 trays)</li><li><span class="check">&#9744;</span> Fruit platters (4-5 trays)</li><li><span class="check">&#9744;</span> Cheese &amp; charcuterie (3-4 boards)</li><li><span class="check">&#9744;</span> Dips: hummus, tzatziki (3-4 containers)</li><li><span class="check">&#9744;</span> Additional salad (TBD)</li><li><span class="check">&#9744;</span> Additional fruit (TBD)</li><li><span class="check">&#9744;</span> Sandwich platters from Costco (TBD)</li><li><span class="check">&#9744;</span> Crackers + bread for grazing (4-5 boxes)</li></ul></div>
 </div>
 
-<div class="accordion" onclick="toggleAcc(this)">
+<div class="accordion">
   <div class="accordion-header"><span class="acc-title">Hot Food (morning of)</span><span class="acc-meta"><span class="acc-count">6 items</span><span class="acc-arrow">&#9662;</span></span></div>
   <div class="accordion-body"><p class="sub">Pick up morning-of or heat on-site / at nearby kitchen.</p><ul class="checklist"><li><span class="check">&#9744;</span> Rotisserie chickens (20-25) — pick up AM, chafing dishes</li><li><span class="check">&#9744;</span> Lasagna / pasta trays (6-8) — reheat</li><li><span class="check">&#9744;</span> Spanakopita / appetizer bites (4-5 boxes)</li><li><span class="check">&#9744;</span> Mac and cheese from Costco (TBD)</li><li><span class="check">&#9744;</span> Rice &amp; veggie vegan dish (TBD)</li><li><span class="check">&#9744;</span> Dinner rolls / bread (4-5 bags)</li></ul></div>
 </div>
 
-<div class="accordion" onclick="toggleAcc(this)">
+<div class="accordion">
   <div class="accordion-header"><span class="acc-title">Ice &amp; Coolers (morning of)</span><span class="acc-meta"><span class="acc-count">5 items</span><span class="acc-arrow">&#9662;</span></span></div>
   <div class="accordion-body"><p class="sub">Assign to ice lead. Pick up by 10:00 AM.</p><ul class="checklist"><li><span class="check">&#9744;</span> 150-200 lbs of ice</li><li><span class="check">&#9744;</span> Drink coolers packed: beer, white wine, sparkling water, sodas</li><li><span class="check">&#9744;</span> Food safety coolers: salads, fruit, dips, charcuterie</li><li><span class="check">&#9744;</span> Ice for bar / ice buckets</li><li><span class="check">&#9744;</span> Backup ice source identified</li></ul></div>
 </div>
 
-<div class="accordion" onclick="toggleAcc(this)">
+<div class="accordion">
   <div class="accordion-header"><span class="acc-title">Alcohol (buy 1 week before)</span><span class="acc-meta"><span class="acc-count">6 items</span><span class="acc-arrow">&#9662;</span></span></div>
   <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Wine — red (12-15 bottles)</li><li><span class="check">&#9744;</span> Wine — white (12-15 bottles)</li><li><span class="check">&#9744;</span> Beer — lager (4-6 cases)</li><li><span class="check">&#9744;</span> Beer — IPA (4-6 cases)</li><li><span class="check">&#9744;</span> Sparkling water (3-4 cases)</li><li><span class="check">&#9744;</span> Sodas (1-2 cases)</li></ul></div>
 </div>
 
-<div class="accordion" onclick="toggleAcc(this)">
+<div class="accordion">
   <div class="accordion-header"><span class="acc-title">Flowers (day before or morning of)</span><span class="acc-meta"><span class="acc-count">8 items</span><span class="acc-arrow">&#9662;</span></span></div>
   <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Sunflowers — quantity TBD</li><li><span class="check">&#9744;</span> Greenery / fillers — quantity TBD</li><li><span class="check">&#9744;</span> Vases / containers for arrangements</li><li><span class="check">&#9744;</span> Floral tape / wire / scissors</li><li><span class="check">&#9744;</span> Confirm with Kelly (if she's arranging)</li><li><span class="check">&#9744;</span> Bouquet(s) — decide if DIY</li><li><span class="check">&#9744;</span> Ceremony spot florals</li><li><span class="check">&#9744;</span> Table arrangements — how many tables?</li></ul></div>
 </div>
@@ -842,14 +842,14 @@
 </div>
 
 <div class="filters">
-  <button class="filter-btn active" onclick="filterMusic('All', this)">All</button>
-  <button class="filter-btn" onclick="filterMusic('Ceremony', this)">Ceremony</button>
-  <button class="filter-btn" onclick="filterMusic('Up the Hill', this)">Up the Hill</button>
-  <button class="filter-btn" onclick="filterMusic('Dance', this)">Dance</button>
-  <button class="filter-btn" onclick="filterMusic('Wed', this)">Wed</button>
+  <button class="filter-btn active" data-music-filter="All">All</button>
+  <button class="filter-btn" data-music-filter="Ceremony">Ceremony</button>
+  <button class="filter-btn" data-music-filter="Up the Hill">Up the Hill</button>
+  <button class="filter-btn" data-music-filter="Dance">Dance</button>
+  <button class="filter-btn" data-music-filter="Wed">Wed</button>
 </div>
 
-<input type="text" class="music-search" placeholder="Search by song or artist..." oninput="searchMusic()">
+<input type="text" class="music-search" id="music-search" placeholder="Search by song or artist...">
 
 <div class="card" style="overflow-x: auto;">
 <table class="music-table" id="music-table">
@@ -1095,70 +1095,75 @@
 
 <script>
 // Countdown
-const wedding = new Date('2026-07-25T16:00:00');
-function updateCountdown() {
-  const now = new Date();
-  const days = Math.ceil((wedding - now) / (1000 * 60 * 60 * 24));
-  document.getElementById('countdown').textContent = days + ' days to go';
-}
-updateCountdown();
-
-// Accordion toggle
-function toggleAcc(el) {
-  el.classList.toggle('open');
-}
+var wedding = new Date('2026-07-25T16:00:00');
+var now = new Date();
+var days = Math.ceil((wedding - now) / (1000 * 60 * 60 * 24));
+document.getElementById('countdown').textContent = days + ' days to go';
 
 // Page navigation
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
-  event.target.classList.add('active');
-  window.scrollTo(0, 0);
-}
+document.querySelectorAll('.nav-link').forEach(function(link) {
+  link.addEventListener('click', function() {
+    document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.nav-link').forEach(function(n) { n.classList.remove('active'); });
+    document.getElementById('page-' + link.dataset.page).classList.add('active');
+    link.classList.add('active');
+    window.scrollTo(0, 0);
+  });
+});
+
+// Accordion toggle
+document.querySelectorAll('.accordion').forEach(function(acc) {
+  acc.addEventListener('click', function() {
+    acc.classList.toggle('open');
+  });
+});
 
 // Checklist filter
-function filterRows(filter, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('#checklist-table tbody tr').forEach(row => {
-    const status = row.dataset.status;
-    const owner = row.dataset.owner;
-    if (filter === 'all') { row.style.display = ''; return; }
-    if (filter === 'nick') { row.style.display = (owner === 'nick' || owner === 'both') ? '' : 'none'; return; }
-    if (filter === 'jamie') { row.style.display = (owner === 'jamie' || owner === 'both') ? '' : 'none'; return; }
-    row.style.display = status === filter ? '' : 'none';
+document.querySelectorAll('[data-filter]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('[data-filter]').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    var filter = btn.dataset.filter;
+    document.querySelectorAll('#checklist-table tbody tr').forEach(function(row) {
+      var status = row.dataset.status;
+      var owner = row.dataset.owner;
+      if (filter === 'all') { row.style.display = ''; return; }
+      if (filter === 'nick') { row.style.display = (owner === 'nick' || owner === 'both') ? '' : 'none'; return; }
+      if (filter === 'jamie') { row.style.display = (owner === 'jamie' || owner === 'both') ? '' : 'none'; return; }
+      row.style.display = status === filter ? '' : 'none';
+    });
   });
-}
+});
 
-// Music filter
-function filterMusic(source, btn) {
-  document.querySelectorAll('#page-music .filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  const searchVal = document.querySelector('.music-search').value.toLowerCase();
-  document.querySelectorAll('#music-table tbody tr').forEach(row => {
-    const src = row.dataset.source;
-    const matchSource = (source === 'All') || src.indexOf(source) !== -1;
-    const song = row.querySelector('.song-name').textContent.toLowerCase();
-    const artist = row.querySelector('.artist').textContent.toLowerCase();
-    const matchSearch = !searchVal || song.indexOf(searchVal) !== -1 || artist.indexOf(searchVal) !== -1;
+// Music helpers
+function applyMusicFilters() {
+  var searchEl = document.getElementById('music-search');
+  var val = searchEl ? searchEl.value.toLowerCase() : '';
+  var activeBtn = document.querySelector('[data-music-filter].active');
+  var source = activeBtn ? activeBtn.textContent.trim() : 'All';
+  document.querySelectorAll('#music-table tbody tr').forEach(function(row) {
+    var src = row.dataset.source;
+    var matchSource = (source === 'All') || src.indexOf(source) !== -1;
+    var song = row.querySelector('.song-name').textContent.toLowerCase();
+    var artist = row.querySelector('.artist').textContent.toLowerCase();
+    var matchSearch = !val || song.indexOf(val) !== -1 || artist.indexOf(val) !== -1;
     row.style.display = (matchSource && matchSearch) ? '' : 'none';
   });
 }
+
+// Music filter buttons
+document.querySelectorAll('[data-music-filter]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('[data-music-filter]').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    applyMusicFilters();
+  });
+});
 
 // Music search
-function searchMusic() {
-  const val = document.querySelector('.music-search').value.toLowerCase();
-  const activeBtn = document.querySelector('#page-music .filter-btn.active');
-  const source = activeBtn ? activeBtn.textContent.trim() : 'All';
-  document.querySelectorAll('#music-table tbody tr').forEach(row => {
-    const src = row.dataset.source;
-    const matchSource = (source === 'All') || src.indexOf(source) !== -1;
-    const song = row.querySelector('.song-name').textContent.toLowerCase();
-    const artist = row.querySelector('.artist').textContent.toLowerCase();
-    const matchSearch = !val || song.indexOf(val) !== -1 || artist.indexOf(val) !== -1;
-    row.style.display = (matchSource && matchSearch) ? '' : 'none';
-  });
+var musicSearch = document.getElementById('music-search');
+if (musicSearch) {
+  musicSearch.addEventListener('input', applyMusicFilters);
 }
 </script>
 </body>
