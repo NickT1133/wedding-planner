@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wedding Planner</title>
+<title>Wedding Planner — Checklist</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -275,8 +275,8 @@
 <nav>
 <div class="nav-inner">
   <span class="nav-brand">Wedding Planner</span>
-  <a class="nav-link active" href="index.html">Overview</a>
-  <a class="nav-link" href="checklist.html">Checklist</a>
+  <a class="nav-link" href="index.html">Overview</a>
+  <a class="nav-link active" href="checklist.html">Checklist</a>
   <a class="nav-link" href="food.html">Food</a>
   <a class="nav-link" href="venue.html">Venue</a>
   <a class="nav-link" href="packing.html">Packing</a>
@@ -288,64 +288,98 @@
 
 <div class="wrap">
 
-<h1>July 25, 2026</h1>
-<p class="subtitle">Backyard Celebration &middot; ~90-100 Guests &middot; 4:00-9:30 PM</p>
-<div class="countdown" id="countdown"></div>
-<p class="updated">Site last updated: March 28, 2026 at 9:15 AM ET</p>
+<div class="stats" style="margin-top: 4px;">
+  <div class="stat"><div class="stat-val green">7</div><div class="stat-lbl">Done</div></div>
+  <div class="stat"><div class="stat-val gold">7</div><div class="stat-lbl">In Progress</div></div>
+  <div class="stat"><div class="stat-val red">35</div><div class="stat-lbl">To Do</div></div>
+</div>
 
-<div class="section-title">Recent Changes</div>
-<div class="card" id="recent-changes">
-<table style="width: 100%; font-size: 0.85rem; border-collapse: collapse;">
-<tr>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4; color: var(--muted); white-space: nowrap; width: 90px; vertical-align: top;">Mar 28</td>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4;">Added Jamie's brain dump — Costco food items (sandwich platters, mac &amp; cheese, rice/veggie vegan dish), Google Photos slideshow with QR code, sunflowers + greenery for flowers (Kelly may help), vows-on-a-sign idea, Bluetooth speaker + mic setup for playlists, refrigeration option for off-site prep</td>
-</tr>
-<tr>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4; color: var(--muted); white-space: nowrap; vertical-align: top;">Mar 28</td>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4;">Added nav bar with multi-page layout, checklist filters (by status and owner), restructured content into Overview, Checklist, Food, Venue, Day-Of, Timeline pages</td>
-</tr>
-<tr>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4; color: var(--muted); white-space: nowrap; vertical-align: top;">Mar 28</td>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4;">Initial site launch — full wedding plan with status tracking, food quantities, day-of schedule, storm plan, month-by-month timeline. All identifying info scrubbed.</td>
-</tr>
-<tr>
-<td style="padding: 6px 0; color: var(--muted); white-space: nowrap; vertical-align: top;">Mar 27</td>
-<td style="padding: 6px 0;">Wedding planning doc created in vault from Notion import. Added table food mapping and aerial property layout TODOs.</td>
-</tr>
+<div class="section-title">All Items</div>
+
+<div class="filters">
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="done">Done</button>
+  <button class="filter-btn" data-filter="wip">In Progress</button>
+  <button class="filter-btn" data-filter="todo">To Do</button>
+  <button class="filter-btn" data-filter="nick">Nick</button>
+  <button class="filter-btn" data-filter="jamie">Jamie</button>
+</div>
+
+<div class="card" style="overflow-x: auto;">
+<table class="status-table" id="checklist-table">
+<thead><tr><th>Item</th><th>Status</th><th>Owner</th></tr></thead>
+<tbody>
+<tr data-status="done" data-owner="both"><td>Save the dates</td><td><span class="badge badge-done">Done</span></td><td class="owner">Both</td></tr>
+<tr data-status="done" data-owner="both"><td>Tents / tables / chairs</td><td><span class="badge badge-done">Done</span> Rented</td><td class="owner">Both</td></tr>
+<tr data-status="done" data-owner="both"><td>Tent lights</td><td><span class="badge badge-done">Done</span> Rented</td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Invitations</td><td><span class="badge badge-wip">In Progress</span> Ordered, send by 4/1</td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Wedding website</td><td><span class="badge badge-wip">In Progress</span> 6 tasks remaining</td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="nick"><td>Hotel block</td><td><span class="badge badge-wip">In Progress</span> Working with hotel rep</td><td class="owner">Nick</td></tr>
+<tr data-status="todo" data-owner="nick"><td>Nick's suit</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Nick</td></tr>
+<tr data-status="todo" data-owner="both"><td>Wedding bands</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="done" data-owner="jamie"><td>Gown alterations</td><td><span class="badge badge-done">Done</span> Jamie handling</td><td class="owner">Jamie</td></tr>
+<tr data-status="todo" data-owner="jamie"><td>Shoes</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Jamie</td></tr>
+<tr data-status="todo" data-owner="jamie"><td>Jewelry</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Jamie</td></tr>
+<tr data-status="todo" data-owner="nick"><td>Quiet generator</td><td><span class="badge badge-todo">To Do</span> Research rental</td><td class="owner">Nick</td></tr>
+<tr data-status="wip" data-owner="nick"><td>Outdoor speakers</td><td><span class="badge badge-wip">In Progress</span> On hand, need to test</td><td class="owner">Nick</td></tr>
+<tr data-status="todo" data-owner="both"><td>Additional lighting plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="jamie"><td>Porta potties</td><td><span class="badge badge-wip">In Progress</span> Almost finalized</td><td class="owner">Jamie</td></tr>
+<tr data-status="done" data-owner="nick"><td>Officiant</td><td><span class="badge badge-done">Done</span> Confirmed</td><td class="owner">Nick</td></tr>
+<tr data-status="done" data-owner="both"><td>Photography</td><td><span class="badge badge-done">Done</span> Shared album TBD. Photo slideshow monitor + QR code for guest uploads</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Map property + ceremony area</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Table / seating layout</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Dance floor / rugs</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Grazing table layout</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Chafing dishes</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Ice plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Refrigeration plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Costco food list</td><td><span class="badge badge-wip">In Progress</span> Draft only</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Alcohol (beer + wine)</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Coffee situation</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Dessert</td><td><span class="badge badge-wip">In Progress</span> Exploring options</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Plates / napkins / utensils</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Food replenishment person</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Trash / recycling / compost</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Fire extinguisher</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Emergency kit</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Borrowed items list</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Firewood</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Favors</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Marriage license</td><td><span class="badge badge-todo">To Do</span> June (valid 60 days)</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Vows</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Decor plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Playlists</td><td><span class="badge badge-wip">In Progress</span> Spotify</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Yard games / activities</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Photo booth</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Night before plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Brunch after plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Family sleeping logistics</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Night of wedding plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Day-of work schedule</td><td><span class="badge badge-wip">In Progress</span> Draft started</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Storm plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+</tbody>
 </table>
-</div>
-
-<div class="section-title priorities">Immediate Priorities</div>
-<div class="card">
-<ul class="priority-list">
-  <li><strong>Finish website + send invitations</strong> — arriving soon, target send by 4/1. RSVP deadline: May 31.</li>
-  <li><strong>Book porta potties</strong> — almost done, just need to finalize payment</li>
-  <li><strong>Hotel block</strong> — working with hotel rep, may pivot to recommendations</li>
-  <li><strong>Buy wedding bands</strong> — custom/sized rings take 4-8 weeks</li>
-  <li><strong>Get Nick's suit</strong> — order this month, fittings in May</li>
-</ul>
-</div>
-
-<div class="section-title">Website — Remaining Tasks</div>
-<div class="card">
-<ul class="checklist">
-  <li><span class="check">&#9744;</span> Add tags to all guests for RSVP purposes</li>
-  <li><span class="check">&#9744;</span> Add hotel block info or recommendations</li>
-  <li><span class="check">&#9744;</span> Update RSVP page to match guest tags for arrival dinner/brunch</li>
-  <li><span class="check">&#9744;</span> Update RSVP — no children except family</li>
-  <li><span class="check">&#9744;</span> Verify Saturday details and timing</li>
-  <li><span class="check">&#9744;</span> Add note about no gifts / no registry</li>
-</ul>
 </div>
 
 </div><!-- end .wrap -->
 
 <script>
-// Countdown
-var wedding = new Date('2026-07-25T16:00:00');
-var now = new Date();
-var days = Math.ceil((wedding - now) / (1000 * 60 * 60 * 24));
-document.getElementById('countdown').textContent = days + ' days to go';
+// Checklist filter
+document.querySelectorAll('[data-filter]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('[data-filter]').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    var filter = btn.dataset.filter;
+    document.querySelectorAll('#checklist-table tbody tr').forEach(function(row) {
+      var status = row.dataset.status;
+      var owner = row.dataset.owner;
+      if (filter === 'all') { row.style.display = ''; return; }
+      if (filter === 'nick') { row.style.display = (owner === 'nick' || owner === 'both') ? '' : 'none'; return; }
+      if (filter === 'jamie') { row.style.display = (owner === 'jamie' || owner === 'both') ? '' : 'none'; return; }
+      row.style.display = status === filter ? '' : 'none';
+    });
+  });
+});
 </script>
 </body>
 </html>

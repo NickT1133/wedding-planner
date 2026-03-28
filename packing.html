@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Planner — Packing</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF7F2;
+    --card: #FFFFFF;
+    --border: #E5DED0;
+    --text: #3A302A;
+    --muted: #8A7E72;
+    --accent: #C9735A;
+    --accent-light: #F5E0D8;
+    --green: #5E8C61;
+    --green-light: #E8F4E8;
+    --gold: #C4953A;
+    --gold-light: #F2E4C0;
+    --red: #B85C5C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0 24px;
+  }
+  .nav-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    padding: 14px 16px 14px 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border);
+    margin-right: 4px;
+  }
+  .nav-link {
+    padding: 14px 14px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    flex-shrink: 0;
+  }
+  .nav-link:hover { color: var(--text); }
+  .nav-link.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+  /* CONTENT */
+  .wrap { max-width: 800px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .subtitle { font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; }
+  .countdown {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .updated { font-size: 0.75rem; color: var(--muted); margin-bottom: 32px; }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 32px 0 14px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-title:first-child { margin-top: 0; }
+  .section-title.priorities { border-color: var(--accent); color: var(--accent); }
+  .section-title.food { border-color: var(--gold); color: var(--gold); }
+  .section-title.green { border-color: var(--green); color: var(--green); }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .stats { display: flex; gap: 12px; margin-bottom: 24px; }
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    text-align: center;
+    flex: 1;
+  }
+  .stat-val { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 700; }
+  .stat-val.green { color: var(--green); }
+  .stat-val.gold { color: var(--gold); }
+  .stat-val.red { color: var(--red); }
+  .stat-lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+
+  /* Status table */
+  .status-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .status-table th {
+    text-align: left; font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted); padding: 8px 12px;
+    border-bottom: 2px solid var(--border);
+  }
+  .status-table td { padding: 10px 12px; border-bottom: 1px solid #f0ece4; vertical-align: top; }
+  .status-table tr:last-child td { border-bottom: none; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.78rem; font-weight: 600; }
+  .badge-done { background: var(--green-light); color: var(--green); }
+  .badge-wip { background: var(--gold-light); color: var(--gold); }
+  .badge-todo { background: #fce8e8; color: var(--red); }
+  .owner { font-size: 0.8rem; color: var(--muted); }
+
+  /* Filter buttons */
+  .filters { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .filter-btn {
+    padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.78rem;
+    font-weight: 500; border: 1.5px solid var(--border); border-radius: 20px;
+    background: var(--card); color: var(--muted); cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn.active { background: var(--accent-light); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+
+  .priority-list { list-style: none; padding: 0; }
+  .priority-list li { padding: 10px 0; border-bottom: 1px solid #f0ece4; font-size: 0.95rem; }
+  .priority-list li:last-child { border-bottom: none; }
+  .priority-list strong { color: var(--accent); }
+
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { padding: 6px 0; font-size: 0.9rem; display: flex; align-items: flex-start; gap: 8px; }
+  .check { color: var(--muted); flex-shrink: 0; }
+
+  .food-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .food-table th {
+    text-align: left; font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted); padding: 8px 10px;
+    border-bottom: 2px solid var(--border);
+  }
+  .food-table td { padding: 8px 10px; border-bottom: 1px solid #f0ece4; }
+
+  .sched-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .sched-table td { padding: 8px 12px; border-bottom: 1px solid #f0ece4; vertical-align: top; }
+  .sched-table .time { font-weight: 600; color: var(--accent); white-space: nowrap; width: 80px; }
+
+  .timeline-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .timeline-table td { padding: 10px 12px; border-bottom: 1px solid #f0ece4; vertical-align: top; }
+  .timeline-table .month { font-weight: 600; white-space: nowrap; width: 100px; }
+
+  h3 { font-size: 1rem; font-weight: 600; margin: 16px 0 8px; }
+  ul { padding-left: 20px; }
+  ul li { margin-bottom: 4px; font-size: 0.9rem; }
+  p { font-size: 0.92rem; }
+  .note { font-size: 0.82rem; color: var(--muted); font-style: italic; margin-top: 8px; }
+  .sub { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+
+  /* Accordion */
+  .accordion {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .accordion-header:hover { background: #f8f5ef; }
+  .accordion-header .acc-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+  .accordion-header .acc-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .accordion-header .acc-count {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .accordion-header .acc-arrow {
+    font-size: 0.7rem;
+    color: var(--muted);
+    transition: transform 0.2s;
+  }
+  .accordion.open .acc-arrow { transform: rotate(180deg); }
+  .accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 18px;
+  }
+  .accordion.open .accordion-body {
+    max-height: 2000px;
+    padding: 0 18px 16px;
+  }
+  .accordion-body .sub { margin-bottom: 8px; }
+
+  /* Music page */
+  .music-search {
+    width: 100%;
+    padding: 10px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+    margin-bottom: 16px;
+  }
+  .music-search:focus { border-color: var(--accent); }
+  .music-search::placeholder { color: var(--muted); }
+  .badge-wed { background: #eae6df; color: var(--muted); }
+  .music-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .music-table th {
+    text-align: left; font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted); padding: 8px 10px;
+    border-bottom: 2px solid var(--border);
+  }
+  .music-table td { padding: 7px 10px; border-bottom: 1px solid #f0ece4; vertical-align: top; }
+  .music-table tr:last-child td { border-bottom: none; }
+  .music-table .song-name { font-weight: 500; }
+  .music-table .artist { color: var(--muted); }
+
+  @media (max-width: 600px) {
+    .stats { flex-direction: column; }
+    .nav-brand { font-size: 0.95rem; padding-right: 12px; }
+    .nav-link { padding: 12px 10px; font-size: 0.78rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+<div class="nav-inner">
+  <span class="nav-brand">Wedding Planner</span>
+  <a class="nav-link" href="index.html">Overview</a>
+  <a class="nav-link" href="checklist.html">Checklist</a>
+  <a class="nav-link" href="food.html">Food</a>
+  <a class="nav-link" href="venue.html">Venue</a>
+  <a class="nav-link active" href="packing.html">Packing</a>
+  <a class="nav-link" href="dayof.html">Day-Of</a>
+  <a class="nav-link" href="timeline.html">Timeline</a>
+  <a class="nav-link" href="music.html">Music</a>
+</div>
+</nav>
+
+<div class="wrap">
+
+<div class="section-title">Packing Bins</div>
+<p style="font-size: 0.92rem; color: var(--muted); margin-bottom: 16px;">Everything gets packed into labeled bins the day before. Morning-of, the crew just unloads and sets up. Click any bin to expand.</p>
+
+<div class="accordion">
+  <div class="accordion-header"><span class="acc-title">Bin 1: AV &amp; Tech</span><span class="acc-meta"><span class="acc-count">9 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><p class="sub">Pack night before. AV lead sets up at 9:00 AM.</p><ul class="checklist"><li><span class="check">&#9744;</span> Quiet generator (rented or purchased)</li><li><span class="check">&#9744;</span> Outdoor extension cords (2x 50ft)</li><li><span class="check">&#9744;</span> Speakers</li><li><span class="check">&#9744;</span> Speaker cables / connectors</li><li><span class="check">&#9744;</span> Old phone with playlists downloaded offline</li><li><span class="check">&#9744;</span> Bluetooth pairing tested with speakers</li><li><span class="check">&#9744;</span> Microphone (for toasts/announcements)</li><li><span class="check">&#9744;</span> Power strip / surge protector</li><li><span class="check">&#9744;</span> Backup phone charger / power bank</li></ul></div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header"><span class="acc-title">Bin 2: Photo Booth &amp; Slideshow</span><span class="acc-meta"><span class="acc-count">10 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Old iPhone for photo booth + mount/tripod</li><li><span class="check">&#9744;</span> Booth app installed and tested</li><li><span class="check">&#9744;</span> Fun background (banner, string lights, florals)</li><li><span class="check">&#9744;</span> Props (optional)</li><li><span class="check">&#9744;</span> Printed QR code sign — shared Google Photos album</li><li><span class="check">&#9744;</span> Monitor/TV for slideshow under tent</li><li><span class="check">&#9744;</span> HDMI cable or Chromecast / Apple TV</li><li><span class="check">&#9744;</span> Phone/device feeding slideshow</li><li><span class="check">&#9744;</span> Power cable for monitor</li><li><span class="check">&#9744;</span> Charger / power bank for booth phone</li></ul></div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header"><span class="acc-title">Bin 3: Ceremony</span><span class="acc-meta"><span class="acc-count">8 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Printed vows (2 copies each + phone backup)</li><li><span class="check">&#9744;</span> Vows sign (keepsake/decor piece)</li><li><span class="check">&#9744;</span> Ceremony arch / backdrop</li><li><span class="check">&#9744;</span> Ceremony florals / arrangements</li><li><span class="check">&#9744;</span> Aisle markers or signage</li><li><span class="check">&#9744;</span> Marriage license (get in June!)</li><li><span class="check">&#9744;</span> Pen for signing license</li><li><span class="check">&#9744;</span> Tissues</li></ul></div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header"><span class="acc-title">Bin 4: Tablecloths &amp; Decor</span><span class="acc-meta"><span class="acc-count">12 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Tablecloths / runners for all tables</li><li><span class="check">&#9744;</span> Table centerpieces</li><li><span class="check">&#9744;</span> Candles / battery-powered votives</li><li><span class="check">&#9744;</span> Welcome sign</li><li><span class="check">&#9744;</span> Seating chart / table assignment sign</li><li><span class="check">&#9744;</span> Menu sign / food labels</li><li><span class="check">&#9744;</span> Bar sign / drink labels</li><li><span class="check">&#9744;</span> Gift/card table sign + card box</li><li><span class="check">&#9744;</span> No gifts / no registry sign</li><li><span class="check">&#9744;</span> Borrowed decor items (track separately)</li><li><span class="check">&#9744;</span> Weights / clips for wind</li><li><span class="check">&#9744;</span> Tape, zip ties, scissors, twine</li></ul></div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header"><span class="acc-title">Bin 5: Plates, Napkins &amp; Utensils</span><span class="acc-meta"><span class="acc-count">9 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><p class="sub">Buy 2 weeks before. Count: 150+ of everything.</p><ul class="checklist"><li><span class="check">&#9744;</span> Dinner plates</li><li><span class="check">&#9744;</span> Dessert / appetizer plates</li><li><span class="check">&#9744;</span> Cups</li><li><span class="check">&#9744;</span> Wine glasses (if not using cups)</li><li><span class="check">&#9744;</span> Napkins (dinner + cocktail size)</li><li><span class="check">&#9744;</span> Forks, knives, spoons</li><li><span class="check">&#9744;</span> Serving spoons / tongs / spatulas</li><li><span class="check">&#9744;</span> Serving platters / trays</li><li><span class="check">&#9744;</span> Cutting boards for grazing table</li></ul></div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header"><span class="acc-title">Bin 6: Grazing Table</span><span class="acc-meta"><span class="acc-count">6 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Large boards / platters (varying sizes)</li><li><span class="check">&#9744;</span> Elevated stands / crates for height</li><li><span class="check">&#9744;</span> Small serving bowls for dips, olives, nuts</li><li><span class="check">&#9744;</span> Cheese knives / spreaders</li><li><span class="check">&#9744;</span> Small signs / labels</li><li><span class="check">&#9744;</span> Serving tongs / picks</li></ul></div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header"><span class="acc-title">Bin 7: Bar &amp; Drinks Setup</span><span class="acc-meta"><span class="acc-count">7 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Bottle openers / wine openers (multiple)</li><li><span class="check">&#9744;</span> Ice buckets / tubs for bottles</li><li><span class="check">&#9744;</span> Drink napkins</li><li><span class="check">&#9744;</span> Drink cups</li><li><span class="check">&#9744;</span> Coolers for beer + white wine</li><li><span class="check">&#9744;</span> Bar table: tablecloth + signage</li><li><span class="check">&#9744;</span> Non-alcoholic option signage</li></ul></div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header"><span class="acc-title">Bin 8: Hot Food Supplies</span><span class="acc-meta"><span class="acc-count">8 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Chafing dishes (6-8 full-size)</li><li><span class="check">&#9744;</span> Sterno fuel cans (2-3 boxes + spares)</li><li><span class="check">&#9744;</span> Lighter / long matches</li><li><span class="check">&#9744;</span> Serving utensils for each dish</li><li><span class="check">&#9744;</span> Food thermometer</li><li><span class="check">&#9744;</span> Aluminum foil</li><li><span class="check">&#9744;</span> Oven mitts / heat-resistant gloves</li><li><span class="check">&#9744;</span> Food labels / warming labels</li></ul></div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header"><span class="acc-title">Bin 9: Games &amp; Activities</span><span class="acc-meta"><span class="acc-count">6 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Cornhole boards + bags</li><li><span class="check">&#9744;</span> Bocce set</li><li><span class="check">&#9744;</span> Horseshoes</li><li><span class="check">&#9744;</span> Giant Jenga</li><li><span class="check">&#9744;</span> KanJam</li><li><span class="check">&#9744;</span> Any other games</li></ul></div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header"><span class="acc-title">Bin 10: Fire Pit &amp; Lighting</span><span class="acc-meta"><span class="acc-count">7 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Firewood (buy 1-2 days before)</li><li><span class="check">&#9744;</span> Fire starter / kindling</li><li><span class="check">&#9744;</span> Lighter / long matches</li><li><span class="check">&#9744;</span> Extra string lights</li><li><span class="check">&#9744;</span> Pathway lights / luminaries</li><li><span class="check">&#9744;</span> Extension cords for lights</li><li><span class="check">&#9744;</span> Candle lighters for table candles</li></ul></div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header"><span class="acc-title">Bin 11: Trash &amp; Cleanup</span><span class="acc-meta"><span class="acc-count">8 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Large trash bags (2 boxes)</li><li><span class="check">&#9744;</span> Recycling bags</li><li><span class="check">&#9744;</span> Compost bags</li><li><span class="check">&#9744;</span> Printed station signs: TRASH / RECYCLING / COMPOST</li><li><span class="check">&#9744;</span> Tape or stands for signs</li><li><span class="check">&#9744;</span> Extra paper towels</li><li><span class="check">&#9744;</span> Spray cleaner for spills</li><li><span class="check">&#9744;</span> Staging area identified for full bags</li></ul></div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header"><span class="acc-title">Bin 12: Emergency Kit</span><span class="acc-meta"><span class="acc-count">14 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Safety pins (various sizes)</li><li><span class="check">&#9744;</span> Stain remover pen (Tide To Go)</li><li><span class="check">&#9744;</span> Ibuprofen + acetaminophen</li><li><span class="check">&#9744;</span> Band-aids + basic first aid</li><li><span class="check">&#9744;</span> Phone chargers + power bank</li><li><span class="check">&#9744;</span> Needle and thread (gown + suit colors)</li><li><span class="check">&#9744;</span> Double-sided tape / fashion tape</li><li><span class="check">&#9744;</span> Baby wipes</li><li><span class="check">&#9744;</span> Antacids / Pepto</li><li><span class="check">&#9744;</span> Sunscreen</li><li><span class="check">&#9744;</span> Bug spray</li><li><span class="check">&#9744;</span> Extra bobby pins + hair ties</li><li><span class="check">&#9744;</span> Sharpie + scissors</li><li><span class="check">&#9744;</span> ABC fire extinguisher</li></ul></div>
+</div>
+
+<!-- DAY-OF CHECKLISTS -->
+<div class="section-title food" style="margin-top: 36px;">Day-Of Checklists</div>
+
+<div class="accordion">
+  <div class="accordion-header"><span class="acc-title">Cold Food (prep day before)</span><span class="acc-meta"><span class="acc-count">9 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><p class="sub">Store in coolers or fridge overnight. Transport cold morning-of.</p><ul class="checklist"><li><span class="check">&#9744;</span> Caesar salad kits (6-8 bags) — toss day-of</li><li><span class="check">&#9744;</span> Veggie platters (4-5 trays)</li><li><span class="check">&#9744;</span> Fruit platters (4-5 trays)</li><li><span class="check">&#9744;</span> Cheese &amp; charcuterie (3-4 boards)</li><li><span class="check">&#9744;</span> Dips: hummus, tzatziki (3-4 containers)</li><li><span class="check">&#9744;</span> Additional salad (TBD)</li><li><span class="check">&#9744;</span> Additional fruit (TBD)</li><li><span class="check">&#9744;</span> Sandwich platters from Costco (TBD)</li><li><span class="check">&#9744;</span> Crackers + bread for grazing (4-5 boxes)</li></ul></div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header"><span class="acc-title">Hot Food (morning of)</span><span class="acc-meta"><span class="acc-count">6 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><p class="sub">Pick up morning-of or heat on-site / at nearby kitchen.</p><ul class="checklist"><li><span class="check">&#9744;</span> Rotisserie chickens (20-25) — pick up AM, chafing dishes</li><li><span class="check">&#9744;</span> Lasagna / pasta trays (6-8) — reheat</li><li><span class="check">&#9744;</span> Spanakopita / appetizer bites (4-5 boxes)</li><li><span class="check">&#9744;</span> Mac and cheese from Costco (TBD)</li><li><span class="check">&#9744;</span> Rice &amp; veggie vegan dish (TBD)</li><li><span class="check">&#9744;</span> Dinner rolls / bread (4-5 bags)</li></ul></div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header"><span class="acc-title">Ice &amp; Coolers (morning of)</span><span class="acc-meta"><span class="acc-count">5 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><p class="sub">Assign to ice lead. Pick up by 10:00 AM.</p><ul class="checklist"><li><span class="check">&#9744;</span> 150-200 lbs of ice</li><li><span class="check">&#9744;</span> Drink coolers packed: beer, white wine, sparkling water, sodas</li><li><span class="check">&#9744;</span> Food safety coolers: salads, fruit, dips, charcuterie</li><li><span class="check">&#9744;</span> Ice for bar / ice buckets</li><li><span class="check">&#9744;</span> Backup ice source identified</li></ul></div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header"><span class="acc-title">Alcohol (buy 1 week before)</span><span class="acc-meta"><span class="acc-count">6 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Wine — red (12-15 bottles)</li><li><span class="check">&#9744;</span> Wine — white (12-15 bottles)</li><li><span class="check">&#9744;</span> Beer — lager (4-6 cases)</li><li><span class="check">&#9744;</span> Beer — IPA (4-6 cases)</li><li><span class="check">&#9744;</span> Sparkling water (3-4 cases)</li><li><span class="check">&#9744;</span> Sodas (1-2 cases)</li></ul></div>
+</div>
+
+<div class="accordion">
+  <div class="accordion-header"><span class="acc-title">Flowers (day before or morning of)</span><span class="acc-meta"><span class="acc-count">8 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Sunflowers — quantity TBD</li><li><span class="check">&#9744;</span> Greenery / fillers — quantity TBD</li><li><span class="check">&#9744;</span> Vases / containers for arrangements</li><li><span class="check">&#9744;</span> Floral tape / wire / scissors</li><li><span class="check">&#9744;</span> Confirm with Kelly (if she's arranging)</li><li><span class="check">&#9744;</span> Bouquet(s) — decide if DIY</li><li><span class="check">&#9744;</span> Ceremony spot florals</li><li><span class="check">&#9744;</span> Table arrangements — how many tables?</li></ul></div>
+</div>
+
+</div><!-- end .wrap -->
+
+<script>
+// Accordion toggle
+document.querySelectorAll('.accordion').forEach(function(acc) {
+  acc.addEventListener('click', function() {
+    acc.classList.toggle('open');
+  });
+});
+</script>
+</body>
+</html>

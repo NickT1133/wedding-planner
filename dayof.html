@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wedding Planner</title>
+<title>Wedding Planner — Day-Of</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -275,12 +275,12 @@
 <nav>
 <div class="nav-inner">
   <span class="nav-brand">Wedding Planner</span>
-  <a class="nav-link active" href="index.html">Overview</a>
+  <a class="nav-link" href="index.html">Overview</a>
   <a class="nav-link" href="checklist.html">Checklist</a>
   <a class="nav-link" href="food.html">Food</a>
   <a class="nav-link" href="venue.html">Venue</a>
   <a class="nav-link" href="packing.html">Packing</a>
-  <a class="nav-link" href="dayof.html">Day-Of</a>
+  <a class="nav-link active" href="dayof.html">Day-Of</a>
   <a class="nav-link" href="timeline.html">Timeline</a>
   <a class="nav-link" href="music.html">Music</a>
 </div>
@@ -288,64 +288,65 @@
 
 <div class="wrap">
 
-<h1>July 25, 2026</h1>
-<p class="subtitle">Backyard Celebration &middot; ~90-100 Guests &middot; 4:00-9:30 PM</p>
-<div class="countdown" id="countdown"></div>
-<p class="updated">Site last updated: March 28, 2026 at 9:15 AM ET</p>
-
-<div class="section-title">Recent Changes</div>
-<div class="card" id="recent-changes">
-<table style="width: 100%; font-size: 0.85rem; border-collapse: collapse;">
-<tr>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4; color: var(--muted); white-space: nowrap; width: 90px; vertical-align: top;">Mar 28</td>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4;">Added Jamie's brain dump — Costco food items (sandwich platters, mac &amp; cheese, rice/veggie vegan dish), Google Photos slideshow with QR code, sunflowers + greenery for flowers (Kelly may help), vows-on-a-sign idea, Bluetooth speaker + mic setup for playlists, refrigeration option for off-site prep</td>
-</tr>
-<tr>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4; color: var(--muted); white-space: nowrap; vertical-align: top;">Mar 28</td>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4;">Added nav bar with multi-page layout, checklist filters (by status and owner), restructured content into Overview, Checklist, Food, Venue, Day-Of, Timeline pages</td>
-</tr>
-<tr>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4; color: var(--muted); white-space: nowrap; vertical-align: top;">Mar 28</td>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4;">Initial site launch — full wedding plan with status tracking, food quantities, day-of schedule, storm plan, month-by-month timeline. All identifying info scrubbed.</td>
-</tr>
-<tr>
-<td style="padding: 6px 0; color: var(--muted); white-space: nowrap; vertical-align: top;">Mar 27</td>
-<td style="padding: 6px 0;">Wedding planning doc created in vault from Notion import. Added table food mapping and aerial property layout TODOs.</td>
-</tr>
+<div class="section-title priorities">Day-of Schedule</div>
+<div class="card">
+<table class="sched-table">
+<tr><td class="time">8:00 AM</td><td>Setup crew — tent layout, tables, chairs, decor, signage</td></tr>
+<tr><td class="time">9:00 AM</td><td>AV lead — generator, speakers, sound test, photo booth</td></tr>
+<tr><td class="time">10:00 AM</td><td>Food crew — store pickup, food prep, grazing table</td></tr>
+<tr><td class="time">11:00 AM</td><td>Food crew — chafing dishes, sterno, serving station</td></tr>
+<tr><td class="time">12:00 PM</td><td>Ice lead — pick up ice, pack coolers</td></tr>
+<tr><td class="time">1:00 PM</td><td>All helpers — final walk-through, yard games out</td></tr>
+<tr><td class="time">2:00 PM</td><td>Get dressed, family photos</td></tr>
+<tr><td class="time">3:30 PM</td><td>Close family gathers for private ceremony</td></tr>
+<tr><td class="time">4:00 PM</td><td>Ceremony — close family only, ~30 min</td></tr>
+<tr><td class="time">4:30 PM</td><td>Guests arrive — snacks + drinks out</td></tr>
+<tr><td class="time">5:30 PM</td><td>Dinner service</td></tr>
+<tr><td class="time">7:00 PM</td><td>Dessert + coffee</td></tr>
+<tr><td class="time">Dusk</td><td>Fire pit lit, string lights on</td></tr>
+<tr><td class="time">9:30 PM</td><td>Cleanup begins</td></tr>
 </table>
 </div>
 
-<div class="section-title priorities">Immediate Priorities</div>
+<div class="section-title">Roles to Assign</div>
 <div class="card">
-<ul class="priority-list">
-  <li><strong>Finish website + send invitations</strong> — arriving soon, target send by 4/1. RSVP deadline: May 31.</li>
-  <li><strong>Book porta potties</strong> — almost done, just need to finalize payment</li>
-  <li><strong>Hotel block</strong> — working with hotel rep, may pivot to recommendations</li>
-  <li><strong>Buy wedding bands</strong> — custom/sized rings take 4-8 weeks</li>
-  <li><strong>Get Nick's suit</strong> — order this month, fittings in May</li>
+<ul>
+  <li><strong>Setup lead</strong> — owns morning setup flow</li>
+  <li><strong>Food + catering lead</strong> (2 people) — chafing dishes, warming, serving, replenishment</li>
+  <li><strong>Drinks lead</strong> — coolers, ice, restocking</li>
+  <li><strong>AV + tech lead</strong> — generator, speakers, playlist, photo booth</li>
+  <li><strong>Ice lead</strong> — morning pickup, cooler management</li>
+  <li><strong>Grazing table lead</strong> — setup and refresh</li>
+  <li><strong>Cleanup lead</strong> — end-of-night teardown</li>
+  <li><strong>Weather watcher</strong> — NOAA check every 30 min</li>
 </ul>
 </div>
 
-<div class="section-title">Website — Remaining Tasks</div>
+<div class="section-title">Storm Plan</div>
 <div class="card">
-<ul class="checklist">
-  <li><span class="check">&#9744;</span> Add tags to all guests for RSVP purposes</li>
-  <li><span class="check">&#9744;</span> Add hotel block info or recommendations</li>
-  <li><span class="check">&#9744;</span> Update RSVP page to match guest tags for arrival dinner/brunch</li>
-  <li><span class="check">&#9744;</span> Update RSVP — no children except family</li>
-  <li><span class="check">&#9744;</span> Verify Saturday details and timing</li>
-  <li><span class="check">&#9744;</span> Add note about no gifts / no registry</li>
+<p>No indoor backup. Tents are the plan: one 20x40, one 10x20, two 10x10 = 1,200 sq ft total. Fits 90-100 seated.</p>
+<h3>Risk Levels</h3>
+<ul>
+  <li><strong>Light rain:</strong> Tents handle it. Keep going.</li>
+  <li><strong>Heavy rain:</strong> Move under tents, close sides.</li>
+  <li><strong>Thunder/lightning:</strong> Shelter, pause until it passes.</li>
+  <li><strong>Major storm:</strong> Monitor conditions. Consider postponing if severe.</li>
 </ul>
+<h3>Prep</h3>
+<ul>
+  <li>Confirm tent sides are in the rental</li>
+  <li>Weather monitoring from 10 days out; go/no-go at 48 hours</li>
+  <li>Assign weather watcher day-of</li>
+  <li>Secure lightweight decor (weights, clips, stakes)</li>
+</ul>
+</div>
+
+<div class="section-title">Emergency Kit</div>
+<div class="card">
+<p>Safety pins, Tide To Go, pain relievers, band-aids, phone chargers + power bank, needle &amp; thread, fashion tape, baby wipes, antacids, sunscreen, bug spray, bobby pins, hair ties, Sharpie</p>
 </div>
 
 </div><!-- end .wrap -->
 
-<script>
-// Countdown
-var wedding = new Date('2026-07-25T16:00:00');
-var now = new Date();
-var days = Math.ceil((wedding - now) / (1000 * 60 * 60 * 24));
-document.getElementById('countdown').textContent = days + ' days to go';
-</script>
 </body>
 </html>

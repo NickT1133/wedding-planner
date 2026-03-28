@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wedding Planner</title>
+<title>Wedding Planner — Food</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -275,9 +275,9 @@
 <nav>
 <div class="nav-inner">
   <span class="nav-brand">Wedding Planner</span>
-  <a class="nav-link active" href="index.html">Overview</a>
+  <a class="nav-link" href="index.html">Overview</a>
   <a class="nav-link" href="checklist.html">Checklist</a>
-  <a class="nav-link" href="food.html">Food</a>
+  <a class="nav-link active" href="food.html">Food</a>
   <a class="nav-link" href="venue.html">Venue</a>
   <a class="nav-link" href="packing.html">Packing</a>
   <a class="nav-link" href="dayof.html">Day-Of</a>
@@ -288,64 +288,86 @@
 
 <div class="wrap">
 
-<h1>July 25, 2026</h1>
-<p class="subtitle">Backyard Celebration &middot; ~90-100 Guests &middot; 4:00-9:30 PM</p>
-<div class="countdown" id="countdown"></div>
-<p class="updated">Site last updated: March 28, 2026 at 9:15 AM ET</p>
-
-<div class="section-title">Recent Changes</div>
-<div class="card" id="recent-changes">
-<table style="width: 100%; font-size: 0.85rem; border-collapse: collapse;">
-<tr>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4; color: var(--muted); white-space: nowrap; width: 90px; vertical-align: top;">Mar 28</td>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4;">Added Jamie's brain dump — Costco food items (sandwich platters, mac &amp; cheese, rice/veggie vegan dish), Google Photos slideshow with QR code, sunflowers + greenery for flowers (Kelly may help), vows-on-a-sign idea, Bluetooth speaker + mic setup for playlists, refrigeration option for off-site prep</td>
-</tr>
-<tr>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4; color: var(--muted); white-space: nowrap; vertical-align: top;">Mar 28</td>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4;">Added nav bar with multi-page layout, checklist filters (by status and owner), restructured content into Overview, Checklist, Food, Venue, Day-Of, Timeline pages</td>
-</tr>
-<tr>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4; color: var(--muted); white-space: nowrap; vertical-align: top;">Mar 28</td>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4;">Initial site launch — full wedding plan with status tracking, food quantities, day-of schedule, storm plan, month-by-month timeline. All identifying info scrubbed.</td>
-</tr>
-<tr>
-<td style="padding: 6px 0; color: var(--muted); white-space: nowrap; vertical-align: top;">Mar 27</td>
-<td style="padding: 6px 0;">Wedding planning doc created in vault from Notion import. Added table food mapping and aerial property layout TODOs.</td>
-</tr>
+<div class="section-title food">Food &amp; Beverage Plan</div>
+<div class="card">
+<p class="note">Flow: arrival snacks + grazing table (4:30) &rarr; dinner (~5:30) &rarr; dessert (~7:00) &rarr; drinks all night</p>
+<br>
+<table class="food-table">
+<thead><tr><th>Item</th><th>Qty (~100)</th><th>Notes</th><th>When to Buy</th></tr></thead>
+<tbody>
+<tr><td>Spanakopita / appetizer bites</td><td>4-5 boxes</td><td>Oven or chafing dish</td><td>Day before</td></tr>
+<tr><td>Rotisserie chickens</td><td>20-25</td><td>Pre-cooked; chafing dishes</td><td>Day of (AM)</td></tr>
+<tr><td>Lasagna / pasta trays</td><td>6-8 trays</td><td>Reheat in oven or chafer</td><td>Day before</td></tr>
+<tr><td>Caesar salad kits</td><td>6-8 bags</td><td>Toss day-of</td><td>Day before</td></tr>
+<tr><td>Dinner rolls / bread</td><td>4-5 bags</td><td>No prep</td><td>Day before</td></tr>
+<tr><td>Veggie platter</td><td>4-5 trays</td><td>Pre-made, chill</td><td>Day before</td></tr>
+<tr><td>Fruit platter</td><td>4-5 trays</td><td>Pre-made</td><td>Day before</td></tr>
+<tr><td>Cheese &amp; charcuterie</td><td>3-4 boards</td><td>Grazing table, room temp</td><td>Day before</td></tr>
+<tr><td>Crackers + bread</td><td>4-5 boxes</td><td>Pair with cheese + dips</td><td>Day before</td></tr>
+<tr><td>Dips (hummus, tzatziki)</td><td>3-4 containers</td><td>Keep cold until setup</td><td>Day before</td></tr>
+<tr><td>Plates, napkins, utensils</td><td>150+ sets</td><td>Go heavy, you'll run out</td><td>2 weeks before</td></tr>
+<tr><td>Wine (red + white)</td><td>25-30 bottles</td><td>~2 glasses/person</td><td>1 week before</td></tr>
+<tr><td>Beer (cases)</td><td>8-12 cases</td><td>Mix lager + IPA</td><td>1 week before</td></tr>
+<tr><td>Sparkling water / sodas</td><td>3-4 cases</td><td>Non-alcoholic options</td><td>1 week before</td></tr>
+<tr><td>Coffee</td><td>TBD</td><td>Urn, cold brew, or skip</td><td>1 week before</td></tr>
+<tr><td>Sandwich platters (Costco)</td><td>TBD</td><td>Additional snack option</td><td>Day before</td></tr>
+<tr><td>Mac and cheese (Costco)</td><td>TBD</td><td>Crowd-pleaser, chafing dish</td><td>Day before</td></tr>
+<tr><td>Rice &amp; veggie vegan dish</td><td>TBD</td><td>Vegan option from Costco</td><td>Day before</td></tr>
+<tr><td>Additional salad</td><td>TBD</td><td>Beyond Caesar, variety</td><td>Day before</td></tr>
+<tr><td>Additional fruit</td><td>TBD</td><td>Supplement fruit platters</td><td>Day before</td></tr>
+<tr><td>Ice</td><td>150-200 lbs</td><td>Drinks + food safety — assign someone</td><td>Day of (AM)</td></tr>
+</tbody>
 </table>
 </div>
 
-<div class="section-title priorities">Immediate Priorities</div>
+<div class="section-title">Grazing Table</div>
 <div class="card">
-<ul class="priority-list">
-  <li><strong>Finish website + send invitations</strong> — arriving soon, target send by 4/1. RSVP deadline: May 31.</li>
-  <li><strong>Book porta potties</strong> — almost done, just need to finalize payment</li>
-  <li><strong>Hotel block</strong> — working with hotel rep, may pivot to recommendations</li>
-  <li><strong>Buy wedding bands</strong> — custom/sized rings take 4-8 weeks</li>
-  <li><strong>Get Nick's suit</strong> — order this month, fittings in May</li>
+<ul>
+  <li>Artisan cheeses, crackers, charcuterie, fruit, nuts, dips, olives, honey</li>
+  <li>Varying heights (boards, stands, crates) for visual interest</li>
+  <li>Keep in shade — cheese melts fast in July</li>
+  <li>Assign 1 person to set up and refresh during the party</li>
 </ul>
 </div>
 
-<div class="section-title">Website — Remaining Tasks</div>
+<div class="section-title">Chafing Dish &amp; Ice Logistics</div>
 <div class="card">
-<ul class="checklist">
-  <li><span class="check">&#9744;</span> Add tags to all guests for RSVP purposes</li>
-  <li><span class="check">&#9744;</span> Add hotel block info or recommendations</li>
-  <li><span class="check">&#9744;</span> Update RSVP page to match guest tags for arrival dinner/brunch</li>
-  <li><span class="check">&#9744;</span> Update RSVP — no children except family</li>
-  <li><span class="check">&#9744;</span> Verify Saturday details and timing</li>
-  <li><span class="check">&#9744;</span> Add note about no gifts / no registry</li>
+<h3>Chafing Dishes</h3>
+<ul>
+  <li>6-8 full-size units (rent or disposable aluminum)</li>
+  <li>Pre-heat 30 min before service</li>
+  <li>Hot food above 140F, cold below 40F — bring a food thermometer</li>
+  <li>Sterno fuel: 2-3 boxes + spare</li>
+</ul>
+<h3>Ice Plan</h3>
+<ul>
+  <li>Assign 1 person as ice + cooler lead — manages refills all night</li>
+  <li>Separate coolers for drinks vs. food safety</li>
+  <li>150-200 lbs, bought morning-of</li>
+</ul>
+<h3>Food Replenishment</h3>
+<ul>
+  <li>Assign 1-2 food leads — monitor and replenish throughout night</li>
+  <li>Brief them: where food is stored, what order to bring things out</li>
+  <li>Key moments: snacks to dinner transition, dessert, late-night refresh</li>
+</ul>
+</div>
+
+<div class="section-title">Coffee &amp; Dessert</div>
+<div class="card">
+<h3>Coffee</h3>
+<ul>
+  <li>Options: large coffee urn (30-60 cup), cold brew concentrate + pitchers, or skip</li>
+  <li>If yes: regular + decaf, cream/sugar station, assign someone to manage</li>
+</ul>
+<h3>Dessert</h3>
+<ul>
+  <li>Exploring: local bakery items and/or Costco sheet cake(s)</li>
+  <li>Decision TBD</li>
 </ul>
 </div>
 
 </div><!-- end .wrap -->
 
-<script>
-// Countdown
-var wedding = new Date('2026-07-25T16:00:00');
-var now = new Date();
-var days = Math.ceil((wedding - now) / (1000 * 60 * 60 * 24));
-document.getElementById('countdown').textContent = days + ' days to go';
-</script>
 </body>
 </html>

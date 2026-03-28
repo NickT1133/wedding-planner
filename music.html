@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Planner — Music</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF7F2;
+    --card: #FFFFFF;
+    --border: #E5DED0;
+    --text: #3A302A;
+    --muted: #8A7E72;
+    --accent: #C9735A;
+    --accent-light: #F5E0D8;
+    --green: #5E8C61;
+    --green-light: #E8F4E8;
+    --gold: #C4953A;
+    --gold-light: #F2E4C0;
+    --red: #B85C5C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0 24px;
+  }
+  .nav-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    padding: 14px 16px 14px 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border);
+    margin-right: 4px;
+  }
+  .nav-link {
+    padding: 14px 14px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    flex-shrink: 0;
+  }
+  .nav-link:hover { color: var(--text); }
+  .nav-link.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+  /* CONTENT */
+  .wrap { max-width: 800px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .subtitle { font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; }
+  .countdown {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .updated { font-size: 0.75rem; color: var(--muted); margin-bottom: 32px; }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 32px 0 14px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-title:first-child { margin-top: 0; }
+  .section-title.priorities { border-color: var(--accent); color: var(--accent); }
+  .section-title.food { border-color: var(--gold); color: var(--gold); }
+  .section-title.green { border-color: var(--green); color: var(--green); }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .stats { display: flex; gap: 12px; margin-bottom: 24px; }
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    text-align: center;
+    flex: 1;
+  }
+  .stat-val { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 700; }
+  .stat-val.green { color: var(--green); }
+  .stat-val.gold { color: var(--gold); }
+  .stat-val.red { color: var(--red); }
+  .stat-lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+
+  /* Status table */
+  .status-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .status-table th {
+    text-align: left; font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted); padding: 8px 12px;
+    border-bottom: 2px solid var(--border);
+  }
+  .status-table td { padding: 10px 12px; border-bottom: 1px solid #f0ece4; vertical-align: top; }
+  .status-table tr:last-child td { border-bottom: none; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.78rem; font-weight: 600; }
+  .badge-done { background: var(--green-light); color: var(--green); }
+  .badge-wip { background: var(--gold-light); color: var(--gold); }
+  .badge-todo { background: #fce8e8; color: var(--red); }
+  .owner { font-size: 0.8rem; color: var(--muted); }
+
+  /* Filter buttons */
+  .filters { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .filter-btn {
+    padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 0.78rem;
+    font-weight: 500; border: 1.5px solid var(--border); border-radius: 20px;
+    background: var(--card); color: var(--muted); cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn.active { background: var(--accent-light); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+
+  .priority-list { list-style: none; padding: 0; }
+  .priority-list li { padding: 10px 0; border-bottom: 1px solid #f0ece4; font-size: 0.95rem; }
+  .priority-list li:last-child { border-bottom: none; }
+  .priority-list strong { color: var(--accent); }
+
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { padding: 6px 0; font-size: 0.9rem; display: flex; align-items: flex-start; gap: 8px; }
+  .check { color: var(--muted); flex-shrink: 0; }
+
+  .food-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .food-table th {
+    text-align: left; font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted); padding: 8px 10px;
+    border-bottom: 2px solid var(--border);
+  }
+  .food-table td { padding: 8px 10px; border-bottom: 1px solid #f0ece4; }
+
+  .sched-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .sched-table td { padding: 8px 12px; border-bottom: 1px solid #f0ece4; vertical-align: top; }
+  .sched-table .time { font-weight: 600; color: var(--accent); white-space: nowrap; width: 80px; }
+
+  .timeline-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .timeline-table td { padding: 10px 12px; border-bottom: 1px solid #f0ece4; vertical-align: top; }
+  .timeline-table .month { font-weight: 600; white-space: nowrap; width: 100px; }
+
+  h3 { font-size: 1rem; font-weight: 600; margin: 16px 0 8px; }
+  ul { padding-left: 20px; }
+  ul li { margin-bottom: 4px; font-size: 0.9rem; }
+  p { font-size: 0.92rem; }
+  .note { font-size: 0.82rem; color: var(--muted); font-style: italic; margin-top: 8px; }
+  .sub { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+
+  /* Accordion */
+  .accordion {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .accordion-header:hover { background: #f8f5ef; }
+  .accordion-header .acc-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+  .accordion-header .acc-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .accordion-header .acc-count {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .accordion-header .acc-arrow {
+    font-size: 0.7rem;
+    color: var(--muted);
+    transition: transform 0.2s;
+  }
+  .accordion.open .acc-arrow { transform: rotate(180deg); }
+  .accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 18px;
+  }
+  .accordion.open .accordion-body {
+    max-height: 2000px;
+    padding: 0 18px 16px;
+  }
+  .accordion-body .sub { margin-bottom: 8px; }
+
+  /* Music page */
+  .music-search {
+    width: 100%;
+    padding: 10px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+    margin-bottom: 16px;
+  }
+  .music-search:focus { border-color: var(--accent); }
+  .music-search::placeholder { color: var(--muted); }
+  .badge-wed { background: #eae6df; color: var(--muted); }
+  .music-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .music-table th {
+    text-align: left; font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted); padding: 8px 10px;
+    border-bottom: 2px solid var(--border);
+  }
+  .music-table td { padding: 7px 10px; border-bottom: 1px solid #f0ece4; vertical-align: top; }
+  .music-table tr:last-child td { border-bottom: none; }
+  .music-table .song-name { font-weight: 500; }
+  .music-table .artist { color: var(--muted); }
+
+  @media (max-width: 600px) {
+    .stats { flex-direction: column; }
+    .nav-brand { font-size: 0.95rem; padding-right: 12px; }
+    .nav-link { padding: 12px 10px; font-size: 0.78rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+<div class="nav-inner">
+  <span class="nav-brand">Wedding Planner</span>
+  <a class="nav-link" href="index.html">Overview</a>
+  <a class="nav-link" href="checklist.html">Checklist</a>
+  <a class="nav-link" href="food.html">Food</a>
+  <a class="nav-link" href="venue.html">Venue</a>
+  <a class="nav-link" href="packing.html">Packing</a>
+  <a class="nav-link" href="dayof.html">Day-Of</a>
+  <a class="nav-link" href="timeline.html">Timeline</a>
+  <a class="nav-link active" href="music.html">Music</a>
+</div>
+</nav>
+
+<div class="wrap">
+
+<h1>Music</h1>
+<p class="subtitle">228 songs across 4 playlists</p>
+
+<div class="stats" style="margin-top: 16px;">
+  <div class="stat"><div class="stat-val">228</div><div class="stat-lbl">Total Songs</div></div>
+  <div class="stat"><div class="stat-val gold">0</div><div class="stat-lbl">With Moments</div></div>
+  <div class="stat"><div class="stat-val red">84</div><div class="stat-lbl">In Multiple Playlists</div></div>
+</div>
+
+<div class="filters">
+  <button class="filter-btn active" data-music-filter="All">All</button>
+  <button class="filter-btn" data-music-filter="Ceremony">Ceremony</button>
+  <button class="filter-btn" data-music-filter="Up the Hill">Up the Hill</button>
+  <button class="filter-btn" data-music-filter="Dance">Dance</button>
+  <button class="filter-btn" data-music-filter="Wed">Wed</button>
+</div>
+
+<input type="text" class="music-search" id="music-search" placeholder="Search by song or artist...">
+
+<div class="card" style="overflow-x: auto;">
+<table class="music-table" id="music-table">
+<thead><tr><th>Song</th><th>Artist</th><th>Source</th><th>Moment</th></tr></thead>
+<tbody>
+<tr data-source="Ceremony"><td class="song-name">Comfortably Numb</td><td class="artist">Vitamin String Quartet</td><td><span class="badge badge-done">Ceremony</span></td><td></td></tr>
+<tr data-source="Ceremony, Wed"><td class="song-name">Telepath</td><td class="artist">Manchester Orchestra</td><td><span class="badge badge-done">Ceremony</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Ceremony, Wed"><td class="song-name">Foxglove</td><td class="artist">Murder By Death</td><td><span class="badge badge-done">Ceremony</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Ceremony, Wed"><td class="song-name">You&#x27;ve Really Got A Hold On Me - Alternate Stereo Mix</td><td class="artist">Smokey Robinson &amp; The Miracles</td><td><span class="badge badge-done">Ceremony</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Ceremony, Wed"><td class="song-name">All My Love</td><td class="artist">Noah Kahan</td><td><span class="badge badge-done">Ceremony</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Ceremony, Wed"><td class="song-name">10,000 Emerald Pools</td><td class="artist">BØRNS</td><td><span class="badge badge-done">Ceremony</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">In My Life - Remastered 2009</td><td class="artist">The Beatles</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">I&#x27;m Still in Love with You</td><td class="artist">Al Green</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Peaches</td><td class="artist">The Presidents Of The United States Of America</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">No Rule</td><td class="artist">Manchester Orchestra</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">She&#x27;s A Lady</td><td class="artist">Tom Jones</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Summersong</td><td class="artist">The Decemberists</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Roll with the Changes</td><td class="artist">REO Speedwagon</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">40 Day Dream - 2019 Remaster</td><td class="artist">Edward Sharpe &amp; The Magnetic Zeros</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Let It Be - Remastered 2009</td><td class="artist">The Beatles</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Tuesday Afternoon (Forever Afternoon)</td><td class="artist">The Moody Blues</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Dancing In the Dark</td><td class="artist">Bruce Springsteen</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Kick Drum Heart</td><td class="artist">The Avett Brothers</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill"><td class="song-name">Atlanta</td><td class="artist">Stone Temple Pilots</td><td><span class="badge badge-wip">Up the Hill</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Tell Her About It</td><td class="artist">Billy Joel</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Heat Waves</td><td class="artist">Glass Animals</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Something About You</td><td class="artist">Boston</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Take The Long Way Home - Remastered 2010</td><td class="artist">Supertramp</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill"><td class="song-name">Mary Mac</td><td class="artist">Carbon Leaf</td><td><span class="badge badge-wip">Up the Hill</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Learning to Fly</td><td class="artist">Pink Floyd</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill"><td class="song-name">Terrified</td><td class="artist">Guster</td><td><span class="badge badge-wip">Up the Hill</span></td><td></td></tr>
+<tr data-source="Up the Hill"><td class="song-name">Bandages</td><td class="artist">Hot Hot Heat</td><td><span class="badge badge-wip">Up the Hill</span></td><td></td></tr>
+<tr data-source="Up the Hill"><td class="song-name">Schadenfreude</td><td class="artist">AJJ</td><td><span class="badge badge-wip">Up the Hill</span></td><td></td></tr>
+<tr data-source="Up the Hill"><td class="song-name">Rogues</td><td class="artist">Incubus</td><td><span class="badge badge-wip">Up the Hill</span></td><td></td></tr>
+<tr data-source="Up the Hill, Dance"><td class="song-name">Sugar</td><td class="artist">Maroon 5</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-todo">Dance</span></td><td></td></tr>
+<tr data-source="Up the Hill"><td class="song-name">I&#x27;d Do Anything For Love (But I Won&#x27;t Do That)</td><td class="artist">Meat Loaf</td><td><span class="badge badge-wip">Up the Hill</span></td><td></td></tr>
+<tr data-source="Up the Hill"><td class="song-name">The Rubberband Man</td><td class="artist">The Spinners</td><td><span class="badge badge-wip">Up the Hill</span></td><td></td></tr>
+<tr data-source="Up the Hill"><td class="song-name">Too Much Time On My Hands</td><td class="artist">Styx</td><td><span class="badge badge-wip">Up the Hill</span></td><td></td></tr>
+<tr data-source="Up the Hill"><td class="song-name">Baker Street</td><td class="artist">Gerry Rafferty</td><td><span class="badge badge-wip">Up the Hill</span></td><td></td></tr>
+<tr data-source="Up the Hill"><td class="song-name">You Really Got Me</td><td class="artist">The Kinks</td><td><span class="badge badge-wip">Up the Hill</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Silver Lining</td><td class="artist">Rilo Kiley</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Livin&#x27; Thing</td><td class="artist">Electric Light Orchestra</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Bananas and Blow</td><td class="artist">Ween</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Ob-La-Di, Ob-La-Da - Remastered 2009</td><td class="artist">The Beatles</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Maybe I'm Amazed - Remastered 2011</td><td class="artist">Paul McCartney</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Dirty Little Girl - Remastered 2014</td><td class="artist">Elton John</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Don&#x27;t Leave Me</td><td class="artist">blink-182</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">It&#x27;s Not Unusual</td><td class="artist">Tom Jones</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Thunderstruck</td><td class="artist">AC/DC</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Don&#x27;t Forget Me (When I&#x27;m Gone)</td><td class="artist">Glass Tiger</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Simple Machine</td><td class="artist">Guster</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Bennie And The Jets - Remastered 2014</td><td class="artist">Elton John</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">The Emotion</td><td class="artist">BØRNS</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Up In Arms</td><td class="artist">Foo Fighters</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Dance, Wed"><td class="song-name">Saturday Night's Alright (For Fighting) - Remastered 2014</td><td class="artist">Elton John</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">The Evil Has Landed</td><td class="artist">Queens of the Stone Age</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Rocket Man (I Think It&#x27;s Going To Be A Long, Long Time)</td><td class="artist">Elton John</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Renegade</td><td class="artist">Styx</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Wed"><td class="song-name">Green Light</td><td class="artist">Lorde</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Up the Hill, Dance, Wed"><td class="song-name">Go With The Flow</td><td class="artist">Queens of the Stone Age</td><td><span class="badge badge-wip">Up the Hill</span> <span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance"><td class="song-name">Bang!</td><td class="artist">AJR</td><td><span class="badge badge-todo">Dance</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">We&#x27;ve Got It Goin&#x27; On - Radio Edit</td><td class="artist">Backstreet Boys</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Mr. Vain - Original Radio Edit</td><td class="artist">Culture Beat</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">We Like To Party! (The Vengabus)</td><td class="artist">Vengaboys</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Cantaloop (Flip Fantasia)</td><td class="artist">Us3;Rahsaan;Gerard Presencer</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Cream On Chrome</td><td class="artist">Ratatat</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Bulletproof</td><td class="artist">La Roux</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">The Rockafeller Skank</td><td class="artist">Fatboy Slim</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Be My Lover</td><td class="artist">La Bouche</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance"><td class="song-name">Take A Chance On Me</td><td class="artist">ABBA</td><td><span class="badge badge-todo">Dance</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Finally</td><td class="artist">CeCe Peniston</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Safe And Sound</td><td class="artist">Capital Cities</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Dancing On My Own</td><td class="artist">Robyn</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Scatman (ski-ba-bop-ba-dop-bop)</td><td class="artist">Scatman John</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Groove Is in the Heart</td><td class="artist">Deee-Lite</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Boom, Boom, Boom, Boom!!</td><td class="artist">Vengaboys</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Tangerine</td><td class="artist">Tommy Newport</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">One More Time</td><td class="artist">Daft Punk</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Better Off Alone</td><td class="artist">Alice Deejay</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Call Me</td><td class="artist">Blondie</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Head Like A Haunted House</td><td class="artist">Queens of the Stone Age</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Firestarter</td><td class="artist">The Prodigy</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Kiss</td><td class="artist">Prince</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Mishto!</td><td class="artist">Gogol Bordello</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Walking on Broken Glass</td><td class="artist">Annie Lennox</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Rhythm Is A Dancer</td><td class="artist">SNAP!</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">AM To PM</td><td class="artist">Christina Milian</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">I&#x27;m Still Standing</td><td class="artist">Elton John</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Mony Mony</td><td class="artist">Billy Idol</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">The Bad Touch</td><td class="artist">Bloodhound Gang</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Ooh Aah... Just A Little Bit - Eurovision Version</td><td class="artist">Gina G</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Say You&#x27;ll Be There</td><td class="artist">Spice Girls</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">I&#x27;m Gonna Get You - Original Flavour Mix</td><td class="artist">Bizarre Inc</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Would You...?</td><td class="artist">Touch &amp; Go</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">The Rhythm of the Night</td><td class="artist">Corona</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Show Me Love</td><td class="artist">Robin S</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">3 Haselnüsse</td><td class="artist">Jaques Raupé;Felix Harrer</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Robot Rock</td><td class="artist">Daft Punk</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Bustin</td><td class="artist">Neil Cicierega Archive</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Turn Down for What</td><td class="artist">DJ Snake;Lil Jon</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Footloose</td><td class="artist">Kenny Loggins</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Beautiful Life</td><td class="artist">Ace of Base</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Dance"><td class="song-name">The Riddle</td><td class="artist">Gigi D&#x27;Agostino</td><td><span class="badge badge-todo">Dance</span></td><td></td></tr>
+<tr data-source="Dance"><td class="song-name">Living In A Haze</td><td class="artist">Milky Chance</td><td><span class="badge badge-todo">Dance</span></td><td></td></tr>
+<tr data-source="Dance, Wed"><td class="song-name">Call on Me</td><td class="artist">Eric Prydz</td><td><span class="badge badge-todo">Dance</span> <span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Josie</td><td class="artist">blink-182</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Born Yesterday</td><td class="artist">Gladie</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Noses in Roses, Forever</td><td class="artist">Desert Sessions</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Unbelievers</td><td class="artist">Vampire Weekend</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">When U Love Somebody</td><td class="artist">Fruit Bats</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">The Story</td><td class="artist">Brandi Carlile</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Villains of Circumstance</td><td class="artist">Queens of the Stone Age</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Bathwater</td><td class="artist">No Doubt</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Mykonos</td><td class="artist">Fleet Foxes</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Lost At Sea</td><td class="artist">Guster</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Crazy On You</td><td class="artist">Heart</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Monkey Wrench</td><td class="artist">Foo Fighters</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Love, Me Normally</td><td class="artist">Will Wood</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Still the One</td><td class="artist">Orleans</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Nearly Lost You</td><td class="artist">Screaming Trees</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">End Of The Line</td><td class="artist">Traveling Wilburys</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Birdhouse in Your Soul</td><td class="artist">They Might Be Giants</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Dedicated To The One I Love</td><td class="artist">The Mamas &amp; The Papas</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Stuck With You</td><td class="artist">Huey Lewis &amp; The News</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Bloom - Bonus Track</td><td class="artist">The Paper Kites</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Too Late To Turn Back Now</td><td class="artist">Cornelius Brothers &amp; Sister Rose</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Lido Shuffle</td><td class="artist">Boz Scaggs</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Sweet Lovin&#x27; - Radio Edit</td><td class="artist">Sigala;Bryn Christopher</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Wait for Me</td><td class="artist">Daryl Hall &amp; John Oates</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">You And I</td><td class="artist">LÉON</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Rivers and Roads</td><td class="artist">The Head And The Heart</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Valerie</td><td class="artist">Steve Winwood</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">American Wedding</td><td class="artist">Gogol Bordello</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Day After Day - Remastered 2010</td><td class="artist">Badfinger</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">I Saw the Light</td><td class="artist">Todd Rundgren</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">I&#x27;ll Take You There</td><td class="artist">The Staple Singers</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Hello It&#x27;s Me</td><td class="artist">Todd Rundgren</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">No Matter What - Remastered 2010</td><td class="artist">Badfinger</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Let&#x27;s Stay Together</td><td class="artist">Al Green</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Burnin&#x27; for You</td><td class="artist">Blue Öyster Cult</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Nothing&#x27;s Gonna Stop Us Now</td><td class="artist">Starship</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">She Calls Me Back</td><td class="artist">Noah Kahan</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">I Like To Move In The Night</td><td class="artist">Eagles Of Death Metal</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Maggie May</td><td class="artist">Rod Stewart</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Blinding Lights</td><td class="artist">The Weeknd</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">New Fang</td><td class="artist">Them Crooked Vultures</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">My Own Worst Enemy</td><td class="artist">Lit</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Hey You</td><td class="artist">No Doubt</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Just What I Needed</td><td class="artist">The Cars</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">The Way You Used To Do</td><td class="artist">Queens of the Stone Age</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Say So</td><td class="artist">Doja Cat</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Bungle in the Jungle</td><td class="artist">Jethro Tull</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Sunday Morning</td><td class="artist">No Doubt</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Let&#x27;s Dance - 2018 Remaster</td><td class="artist">David Bowie</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Your Party</td><td class="artist">Ween</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Oh Darling</td><td class="artist">Supertramp</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">All I Want Is You</td><td class="artist">Barry Louis Polisar</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Marie Laveau</td><td class="artist">Volbeat</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Jane Says</td><td class="artist">Jane&#x27;s Addiction</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Yoshimi Battles the Pink Robots, Pt. 1</td><td class="artist">The Flaming Lips</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Sweet Dreams - Radio Version</td><td class="artist">La Bouche</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Plush</td><td class="artist">Stone Temple Pilots</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Long Train Runnin&#x27;</td><td class="artist">The Doobie Brothers</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Something To Talk About</td><td class="artist">Bonnie Raitt</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Pistola</td><td class="artist">Incubus</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Show Me How to Live</td><td class="artist">Audioslave</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Capital Karma</td><td class="artist">Manchester Orchestra</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Eternal Life</td><td class="artist">Jeff Buckley</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Man in the Box</td><td class="artist">Alice In Chains</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Cavalry Captain</td><td class="artist">The Decemberists</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">12/17/12</td><td class="artist">The Decemberists</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Honky Cat</td><td class="artist">Elton John</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Grey Seal - Remastered 2014</td><td class="artist">Elton John</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">The Ballad Of Danny Bailey (1909-1934) - Remastered 2014</td><td class="artist">Elton John</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Philadelphia Freedom</td><td class="artist">Elton John</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Here Comes The Sun - Remastered 2009</td><td class="artist">The Beatles</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">While My Guitar Gently Weeps - Remastered 2009</td><td class="artist">The Beatles</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Strawberry Fields Forever - Take 1</td><td class="artist">The Beatles</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">The Lion The Beast The Beat</td><td class="artist">Grace Potter &amp; The Nocturnals</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Clandestina (Cover)</td><td class="artist">Emma Peters;Edmofo Remix</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Brass Monkey</td><td class="artist">Beastie Boys</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Where Do You Go</td><td class="artist">No Mercy</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Northwestern Bell, Pt. 2</td><td class="artist">Thes One</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Gabrielle</td><td class="artist">Ween</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Have a Cigar</td><td class="artist">Pink Floyd</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Carousel</td><td class="artist">blink-182</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">I / Me / Myself</td><td class="artist">Will Wood</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Hooked On A Feeling</td><td class="artist">Blue Swede;Björn Skifs</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Low</td><td class="artist">Cracker</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Time</td><td class="artist">Pink Floyd</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Better Days (And the Bottom Drops Out)</td><td class="artist">Citizen King</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Right Down the Line</td><td class="artist">Gerry Rafferty</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Live And Die</td><td class="artist">The Avett Brothers</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Let Your Troubles Roll By</td><td class="artist">Carbon Leaf</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">In the Clouds</td><td class="artist">O.A.R.</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Second Walk</td><td class="artist">John Frusciante</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Old Pop in an Oak - Original Radio Edit</td><td class="artist">Rednex</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">High Hopes</td><td class="artist">Panic! At The Disco</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Electric Love</td><td class="artist">BØRNS</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Bloody Well Right - Remastered 2010</td><td class="artist">Supertramp</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Bottle Rocket</td><td class="artist">Briston Maroney</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Sweet Dreams (Are Made of This) - 2005 Remaster</td><td class="artist">Eurythmics;Annie Lennox;Dave Stewart</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Black Out Days</td><td class="artist">Phantogram</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Pansy Waltz</td><td class="artist">Shakey Graves</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">The Perfect Space</td><td class="artist">The Avett Brothers</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">The Gold</td><td class="artist">Manchester Orchestra</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Jumpin&#x27;, Jumpin&#x27;</td><td class="artist">Destiny&#x27;s Child</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Breathe</td><td class="artist">The Prodigy</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Gonna Make You Sweat (Everybody Dance Now) (feat. Freedom Williams)</td><td class="artist">C &amp; C Music Factory;Freedom Williams</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">It Feels So Good</td><td class="artist">Sonique</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Hush</td><td class="artist">Kula Shaker</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Come Baby Come</td><td class="artist">K7</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Australia</td><td class="artist">The Shins</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Nights In White Satin - Single Version / Mono</td><td class="artist">The Moody Blues</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Tried And True</td><td class="artist">Ween</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Home - 2019 Remaster</td><td class="artist">Edward Sharpe &amp; The Magnetic Zeros</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Barrel Of A Gun</td><td class="artist">Guster</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">The Party Song</td><td class="artist">blink-182</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Fell On Black Days</td><td class="artist">Soundgarden</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">A Crow Left of the Murder</td><td class="artist">Incubus</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Exploder</td><td class="artist">Audioslave</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Hunger Strike</td><td class="artist">Temple Of The Dog</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Laid</td><td class="artist">James</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Just Another Nervous Wreck</td><td class="artist">Supertramp</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">I Go to Extremes</td><td class="artist">Billy Joel</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Man Overboard</td><td class="artist">blink-182</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Wish You Were Here</td><td class="artist">Pink Floyd</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Sh-Boom</td><td class="artist">The Crew Cuts</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Kiss on My List</td><td class="artist">Daryl Hall &amp; John Oates</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Fruit Salad</td><td class="artist">Tom Cardy</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">I 4 U &amp; U 4 Me - Home Demo</td><td class="artist">The Decemberists</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Brandy (You&#x27;re a Fine Girl)</td><td class="artist">Looking Glass</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+<tr data-source="Wed"><td class="song-name">Brother</td><td class="artist">Murder By Death</td><td><span class="badge badge-wed">Wed</span></td><td></td></tr>
+</tbody>
+</table>
+</div>
+
+<p class="note">Exported from Spotify on 2026-03-28. Edit moments in the vault at Projects/Wedding Music.md</p>
+
+</div><!-- end .wrap -->
+
+<script>
+// Music helpers
+function applyMusicFilters() {
+  var searchEl = document.getElementById('music-search');
+  var val = searchEl ? searchEl.value.toLowerCase() : '';
+  var activeBtn = document.querySelector('[data-music-filter].active');
+  var source = activeBtn ? activeBtn.textContent.trim() : 'All';
+  document.querySelectorAll('#music-table tbody tr').forEach(function(row) {
+    var src = row.dataset.source;
+    var matchSource = (source === 'All') || src.indexOf(source) !== -1;
+    var song = row.querySelector('.song-name').textContent.toLowerCase();
+    var artist = row.querySelector('.artist').textContent.toLowerCase();
+    var matchSearch = !val || song.indexOf(val) !== -1 || artist.indexOf(val) !== -1;
+    row.style.display = (matchSource && matchSearch) ? '' : 'none';
+  });
+}
+
+// Music filter buttons
+document.querySelectorAll('[data-music-filter]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('[data-music-filter]').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    applyMusicFilters();
+  });
+});
+
+// Music search
+var musicSearch = document.getElementById('music-search');
+if (musicSearch) {
+  musicSearch.addEventListener('input', applyMusicFilters);
+}
+</script>
+</body>
+</html>
