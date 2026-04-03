@@ -74,6 +74,8 @@
 
   /* CONTENT */
   .wrap { max-width: 800px; margin: 0 auto; padding: 32px 24px 80px; }
+  .page { display: none; }
+  .page.active { display: block; }
 
   h1 {
     font-family: 'Cormorant Garamond', serif;
@@ -104,6 +106,7 @@
   .section-title.priorities { border-color: var(--accent); color: var(--accent); }
   .section-title.food { border-color: var(--gold); color: var(--gold); }
   .section-title.green { border-color: var(--green); color: var(--green); }
+  .section-title.budget { border-color: var(--green); color: var(--green); }
 
   .card {
     background: var(--card);
@@ -171,6 +174,17 @@
   }
   .food-table td { padding: 8px 10px; border-bottom: 1px solid #f0ece4; }
 
+  .budget-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .budget-table th {
+    text-align: left; font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted); padding: 8px 12px;
+    border-bottom: 2px solid var(--border);
+  }
+  .budget-table td { padding: 10px 12px; border-bottom: 1px solid #f0ece4; vertical-align: top; }
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table .amount { font-weight: 600; white-space: nowrap; }
+  .budget-table .total-row td { border-top: 2px solid var(--border); font-weight: 700; }
+
   .sched-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
   .sched-table td { padding: 8px 12px; border-bottom: 1px solid #f0ece4; vertical-align: top; }
   .sched-table .time { font-weight: 600; color: var(--accent); white-space: nowrap; width: 80px; }
@@ -235,36 +249,26 @@
   }
   .accordion-body .sub { margin-bottom: 8px; }
 
-  /* Music page */
-  .music-search {
-    width: 100%;
-    padding: 10px 14px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.88rem;
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
+  /* Budget summary cards */
+  .budget-summary { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+  .budget-card {
     background: var(--card);
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.15s;
-    margin-bottom: 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    flex: 1;
+    min-width: 140px;
   }
-  .music-search:focus { border-color: var(--accent); }
-  .music-search::placeholder { color: var(--muted); }
-  .badge-wed { background: #eae6df; color: var(--muted); }
-  .music-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-  .music-table th {
-    text-align: left; font-size: 0.7rem; text-transform: uppercase;
-    letter-spacing: 0.08em; color: var(--muted); padding: 8px 10px;
-    border-bottom: 2px solid var(--border);
-  }
-  .music-table td { padding: 7px 10px; border-bottom: 1px solid #f0ece4; vertical-align: top; }
-  .music-table tr:last-child td { border-bottom: none; }
-  .music-table .song-name { font-weight: 500; }
-  .music-table .artist { color: var(--muted); }
+  .budget-card-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+  .budget-card-value { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; }
+  .budget-card-value.green { color: var(--green); }
+  .budget-card-value.gold { color: var(--gold); }
+  .budget-card-value.red { color: var(--red); }
+  .budget-card-value.accent { color: var(--accent); }
 
   @media (max-width: 600px) {
     .stats { flex-direction: column; }
+    .budget-summary { flex-direction: column; }
     .nav-brand { font-size: 0.95rem; padding-right: 12px; }
     .nav-link { padding: 12px 10px; font-size: 0.78rem; }
   }
@@ -275,50 +279,51 @@
 <nav>
 <div class="nav-inner">
   <span class="nav-brand">Wedding Planner</span>
-  <a class="nav-link active" href="index.html">Overview</a>
-  <a class="nav-link" href="checklist.html">Checklist</a>
-  <a class="nav-link" href="food.html">Food</a>
-  <a class="nav-link" href="venue.html">Venue</a>
-  <a class="nav-link" href="packing.html">Packing</a>
-  <a class="nav-link" href="dayof.html">Day-Of</a>
-  <a class="nav-link" href="timeline.html">Timeline</a>
-  <a class="nav-link" href="music.html">Music</a>
+  <a class="nav-link active" onclick="showPage('overview')">Overview</a>
+  <a class="nav-link" onclick="showPage('checklist')">Checklist</a>
+  <a class="nav-link" onclick="showPage('budget')">Budget</a>
+  <a class="nav-link" onclick="showPage('food')">Food &amp; Drinks</a>
+  <a class="nav-link" onclick="showPage('venue')">Venue &amp; Decor</a>
+  <a class="nav-link" onclick="showPage('packing')">Packing Lists</a>
+  <a class="nav-link" onclick="showPage('dayof')">Day-Of</a>
+  <a class="nav-link" onclick="showPage('timeline')">Timeline</a>
 </div>
 </nav>
 
 <div class="wrap">
 
+<!-- ============ OVERVIEW ============ -->
+<div class="page active" id="page-overview">
+
 <h1>July 25, 2026</h1>
-<p class="subtitle">Backyard Celebration &middot; ~90-100 Guests &middot; 4:00-9:30 PM</p>
+<p class="subtitle">Backyard Celebration &middot; Richmond, VT &middot; ~90-100 Guests &middot; 4:00-9:30 PM</p>
 <div class="countdown" id="countdown"></div>
-<p class="updated">Site last updated: March 30, 2026</p>
+<p class="updated">Site last updated: April 2, 2026</p>
+
+<div class="stats">
+  <div class="stat"><div class="stat-val green">7</div><div class="stat-lbl">Done</div></div>
+  <div class="stat"><div class="stat-val gold">11</div><div class="stat-lbl">In Progress</div></div>
+  <div class="stat"><div class="stat-val red">34</div><div class="stat-lbl">To Do</div></div>
+</div>
 
 <div class="section-title">Recent Changes</div>
 <div class="card" id="recent-changes">
 <table style="width: 100%; font-size: 0.85rem; border-collapse: collapse;">
 <tr>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4; color: var(--muted); white-space: nowrap; width: 90px; vertical-align: top;">Mar 30</td>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4;">Porta potties booked with P&amp;P Septic (moved to Done). Hotel block updated — waiting on Marriott rep for TownePlace Suites + Courtyard Williston courtesy block (Jul 24-25). Added hotel options section to venue page with 4 researched options and phone numbers. Generator moved to In Progress (Home Depot rental, book ~June 5).</td>
-</tr>
-<tr>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4; color: var(--muted); white-space: nowrap; width: 90px; vertical-align: top;">Mar 29</td>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4;">Updated checklist: ice plan, refrigeration, alcohol, and photography now in progress. Added tortellini salad to food list, updated beer to light beers only, added food cleanup plan. Updated venue with confirmed refrigeration plan (coolers + chest freezer + fridge), beverage plan, and guest photo album service options. Added late-night fires section to day-of page.</td>
-</tr>
-<tr>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4; color: var(--muted); white-space: nowrap; width: 90px; vertical-align: top;">Mar 28</td>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4;">Added Jamie's brain dump — Costco food items (sandwich platters, mac &amp; cheese, rice/veggie vegan dish), Google Photos slideshow with QR code, sunflowers + greenery for flowers, vows-on-a-sign idea, Bluetooth speaker + mic setup for playlists, refrigeration option for off-site prep</td>
+<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4; color: var(--muted); white-space: nowrap; width: 90px; vertical-align: top;">Apr 2</td>
+<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4;">Added Budget &amp; Spending Tracker page. Updated all checklist statuses from planning doc. Porta potties booked, speakers tested, generator rental planned. Added guest book, compost plan, and ice table as new items. Website 5 of 6 tasks done. Updated guest photo album options (evaluating services).</td>
 </tr>
 <tr>
 <td style="padding: 6px 0; border-bottom: 1px solid #f0ece4; color: var(--muted); white-space: nowrap; vertical-align: top;">Mar 28</td>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4;">Added nav bar with multi-page layout, checklist filters (by status and owner), restructured content into Overview, Checklist, Food, Venue, Day-Of, Timeline pages</td>
+<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4;">Added Jamie's brain dump — Costco food items (sandwich platters, mac &amp; cheese, rice/veggie vegan dish), photo slideshow with QR code, sunflowers + greenery for flowers, vows-on-a-sign idea, Bluetooth speaker + mic setup for playlists</td>
 </tr>
 <tr>
 <td style="padding: 6px 0; border-bottom: 1px solid #f0ece4; color: var(--muted); white-space: nowrap; vertical-align: top;">Mar 28</td>
-<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4;">Initial site launch — full wedding plan with status tracking, food quantities, day-of schedule, storm plan, month-by-month timeline. All identifying info scrubbed.</td>
+<td style="padding: 6px 0; border-bottom: 1px solid #f0ece4;">Added nav bar with multi-page layout, checklist filters, packing lists, restructured content</td>
 </tr>
 <tr>
 <td style="padding: 6px 0; color: var(--muted); white-space: nowrap; vertical-align: top;">Mar 27</td>
-<td style="padding: 6px 0;">Wedding planning doc created in vault from Notion import. Added table food mapping and aerial property layout TODOs.</td>
+<td style="padding: 6px 0;">Wedding planning doc created. Initial site launch with full plan, status tracking, food quantities, day-of schedule, storm plan, timeline.</td>
 </tr>
 </table>
 </div>
@@ -326,9 +331,8 @@
 <div class="section-title priorities">Immediate Priorities</div>
 <div class="card">
 <ul class="priority-list">
-  <li><strong>Finish website + send invitations</strong> — arriving soon, target send by 4/1. RSVP deadline: May 31.</li>
-  <li><strong>Book porta potties</strong> — Done! Booked with P&amp;P Septic</li>
-  <li><strong>Hotel block</strong> — Waiting on Marriott rep for TownePlace + Courtyard Williston (Jul 24-25). Backup list ready.</li>
+  <li><strong>Finish website + send invitations</strong> — invitations arrived, target send by 4/5. Website 5 of 6 done (schedule page pending). RSVP deadline: May 31.</li>
+  <li><strong>Hotel block</strong> — 4 hotel recommendations on site. Still waiting on hotel rep for formal block.</li>
   <li><strong>Buy wedding bands</strong> — custom/sized rings take 4-8 weeks</li>
   <li><strong>Get Nick's suit</strong> — order this month, fittings in May</li>
 </ul>
@@ -337,23 +341,680 @@
 <div class="section-title">Website — Remaining Tasks</div>
 <div class="card">
 <ul class="checklist">
-  <li><span class="check">&#9744;</span> Add tags to all guests for RSVP purposes</li>
-  <li><span class="check">&#9744;</span> Add hotel block info or recommendations</li>
-  <li><span class="check">&#9744;</span> Update RSVP page to match guest tags for arrival dinner/brunch</li>
-  <li><span class="check">&#9744;</span> Update RSVP — no children except family</li>
-  <li><span class="check">&#9744;</span> Verify Saturday details and timing</li>
-  <li><span class="check">&#9744;</span> Add note about no gifts / no registry</li>
+  <li><span class="check" style="color: var(--green);">&#9745;</span> Add tags to all guests for RSVP purposes</li>
+  <li><span class="check" style="color: var(--green);">&#9745;</span> Add hotel block info (4 recommended hotels added)</li>
+  <li><span class="check" style="color: var(--green);">&#9745;</span> Update RSVP page to match guest tags for arrival dinner/brunch</li>
+  <li><span class="check" style="color: var(--green);">&#9745;</span> Update RSVP — no children except family</li>
+  <li><span class="check">&#9744;</span> Verify Saturday details and timing — check with Jamie re: arrival dinner/brunch visibility</li>
+  <li><span class="check" style="color: var(--green);">&#9745;</span> Add note about no gifts / no registry</li>
 </ul>
+</div>
+
+</div>
+
+<!-- ============ CHECKLIST ============ -->
+<div class="page" id="page-checklist">
+
+<div class="stats" style="margin-top: 4px;">
+  <div class="stat"><div class="stat-val green">7</div><div class="stat-lbl">Done</div></div>
+  <div class="stat"><div class="stat-val gold">11</div><div class="stat-lbl">In Progress</div></div>
+  <div class="stat"><div class="stat-val red">34</div><div class="stat-lbl">To Do</div></div>
+</div>
+
+<div class="section-title">All Items</div>
+
+<div class="filters">
+  <button class="filter-btn active" onclick="filterRows('all', this)">All</button>
+  <button class="filter-btn" onclick="filterRows('done', this)">Done</button>
+  <button class="filter-btn" onclick="filterRows('wip', this)">In Progress</button>
+  <button class="filter-btn" onclick="filterRows('todo', this)">To Do</button>
+  <button class="filter-btn" onclick="filterRows('nick', this)">Nick</button>
+  <button class="filter-btn" onclick="filterRows('jamie', this)">Jamie</button>
+</div>
+
+<div class="card" style="overflow-x: auto;">
+<table class="status-table" id="checklist-table">
+<thead><tr><th>Item</th><th>Status</th><th>Owner</th></tr></thead>
+<tbody>
+<tr data-status="done" data-owner="both"><td>Save the dates</td><td><span class="badge badge-done">Done</span></td><td class="owner">Both</td></tr>
+<tr data-status="done" data-owner="both"><td>Tents / tables / chairs</td><td><span class="badge badge-done">Done</span> Rented</td><td class="owner">Both</td></tr>
+<tr data-status="done" data-owner="both"><td>Tent lights</td><td><span class="badge badge-done">Done</span> Rented</td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Invitations</td><td><span class="badge badge-wip">In Progress</span> Arrived — send by 4/5 (1 website item remaining)</td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Wedding website</td><td><span class="badge badge-wip">In Progress</span> 5 of 6 done — schedule page pending</td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="nick"><td>Hotel block</td><td><span class="badge badge-wip">In Progress</span> 4 recommendations on site. Waiting on rep for formal block.</td><td class="owner">Nick</td></tr>
+<tr data-status="todo" data-owner="nick"><td>Nick's suit</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Nick</td></tr>
+<tr data-status="todo" data-owner="both"><td>Wedding bands</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="done" data-owner="jamie"><td>Gown alterations</td><td><span class="badge badge-done">Done</span> Jamie handling</td><td class="owner">Jamie</td></tr>
+<tr data-status="todo" data-owner="jamie"><td>Shoes</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Jamie</td></tr>
+<tr data-status="todo" data-owner="jamie"><td>Jewelry</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Jamie</td></tr>
+<tr data-status="wip" data-owner="nick"><td>Quiet generator</td><td><span class="badge badge-wip">In Progress</span> Renting from Home Depot — book online ~June 5</td><td class="owner">Nick</td></tr>
+<tr data-status="done" data-owner="nick"><td>Outdoor speakers</td><td><span class="badge badge-done">Done</span> Tested, sound good</td><td class="owner">Nick</td></tr>
+<tr data-status="todo" data-owner="both"><td>Additional lighting plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="done" data-owner="jamie"><td>Porta potties</td><td><span class="badge badge-done">Done</span> Booked</td><td class="owner">Jamie</td></tr>
+<tr data-status="done" data-owner="nick"><td>Officiant</td><td><span class="badge badge-done">Done</span> Confirmed — mutual friend</td><td class="owner">Nick</td></tr>
+<tr data-status="wip" data-owner="both"><td>Photography</td><td><span class="badge badge-wip">In Progress</span> Friend with camera + guest photo album (evaluating services)</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Map property + ceremony area</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Table / seating layout</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Dance floor / rugs</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Grazing table layout</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Chafing dishes</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Ice plan</td><td><span class="badge badge-wip">In Progress</span> 2x 150qt coolers in hand, need chest freezer</td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Refrigeration plan</td><td><span class="badge badge-wip">In Progress</span> Need fridge + chest freezer from FB Marketplace</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Costco food list</td><td><span class="badge badge-todo">To Do</span> Draft only</td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Alcohol (beer + wine)</td><td><span class="badge badge-wip">In Progress</span> Plan set — light beers, prosecco for toasts. Quantities TBD.</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Coffee situation</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Dessert</td><td><span class="badge badge-wip">In Progress</span> Local bakery and/or Costco sheet cake(s)</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Rebel Cheese / grazing table</td><td><span class="badge badge-todo">To Do</span> Not decided</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Plates / napkins / utensils</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Food replenishment person</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Trash / recycling / compost</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Fire extinguisher</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Emergency kit</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Borrowed items list</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Firewood</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Favors</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Marriage license</td><td><span class="badge badge-todo">To Do</span> June (valid 60 days)</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Vows</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Decor plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Playlists</td><td><span class="badge badge-wip">In Progress</span> Updating on Spotify</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Yard games / activities</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Photo booth</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Night before plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Brunch after plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Family sleeping logistics</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Guest book</td><td><span class="badge badge-todo">To Do</span> Not decided — traditional, digital, or AI interviewer?</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Night of wedding plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="wip" data-owner="both"><td>Day-of work schedule</td><td><span class="badge badge-wip">In Progress</span> Draft in progress</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Storm plan</td><td><span class="badge badge-todo">To Do</span> Draft below</td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Compost plan</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+<tr data-status="todo" data-owner="both"><td>Ice table</td><td><span class="badge badge-todo">To Do</span></td><td class="owner">Both</td></tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+<!-- ============ BUDGET ============ -->
+<div class="page" id="page-budget">
+
+<div class="section-title budget">Budget &amp; Spending Tracker</div>
+
+<div class="budget-summary">
+  <div class="budget-card">
+    <div class="budget-card-label">Total Paid</div>
+    <div class="budget-card-value green">$1,094</div>
+  </div>
+  <div class="budget-card">
+    <div class="budget-card-label">Committed (Unpaid)</div>
+    <div class="budget-card-value gold">$925</div>
+  </div>
+  <div class="budget-card">
+    <div class="budget-card-label">Est. Remaining</div>
+    <div class="budget-card-value red">~$2,675-3,960</div>
+  </div>
+  <div class="budget-card">
+    <div class="budget-card-label">Budget</div>
+    <div class="budget-card-value accent">$6,000-7,000</div>
+  </div>
+</div>
+
+<div class="section-title">Spent (Paid)</div>
+<div class="card" style="overflow-x: auto;">
+<table class="budget-table">
+<thead><tr><th>Item</th><th>Cost</th><th>Date</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Tent / table / chair package (deposit)</td><td class="amount">$625</td><td>Mar 2026</td><td>50% deposit to lock in. Balance due before wedding.</td></tr>
+<tr><td>Outdoor speakers (x2)</td><td class="amount">$280</td><td>Mar 2026</td><td>In hand, tested.</td></tr>
+<tr><td>Coolers — 2x 150qt</td><td class="amount">$189</td><td>Mar 2026</td><td>Delivered to VT.</td></tr>
+<tr class="total-row"><td><strong>Total Paid</strong></td><td class="amount"><strong>$1,094</strong></td><td></td><td></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="section-title">Committed (Reserved, Not Yet Paid)</div>
+<div class="card" style="overflow-x: auto;">
+<table class="budget-table">
+<thead><tr><th>Item</th><th>Est. Cost</th><th>Due</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Tent / table / chair balance</td><td class="amount">$625</td><td>Before Jul 25</td><td>Same vendor as deposit</td></tr>
+<tr><td>Porta potties</td><td class="amount">$300</td><td>Before Jul 25</td><td>Reserved, payment on file</td></tr>
+<tr class="total-row"><td><strong>Total Committed</strong></td><td class="amount"><strong>$925</strong></td><td></td><td></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="section-title">Estimated Remaining Purchases</div>
+<div class="card" style="overflow-x: auto;">
+<table class="budget-table">
+<thead><tr><th>Category</th><th>Est. Cost</th><th>When</th></tr></thead>
+<tbody>
+<tr><td>Round 2 — supplies, decor, plates, yard games</td><td class="amount">$1,200-1,800</td><td>Apr-May</td></tr>
+<tr><td>Round 3 — food, beer, wine, ice, flowers</td><td class="amount">$1,275-1,910</td><td>Jun-Jul</td></tr>
+<tr><td>Generator rental (2 days)</td><td class="amount">$150</td><td>Jul</td></tr>
+<tr><td>Guest photo album service</td><td class="amount">$50-100</td><td>Jun</td></tr>
+<tr class="total-row"><td><strong>Est. Remaining</strong></td><td class="amount"><strong>$2,675-3,960</strong></td><td></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="section-title">Budget Summary</div>
+<div class="card" style="overflow-x: auto;">
+<table class="budget-table">
+<tbody>
+<tr><td>Total paid</td><td class="amount">$1,094</td></tr>
+<tr><td>Total committed (unpaid)</td><td class="amount">$925</td></tr>
+<tr><td>Estimated remaining</td><td class="amount">~$2,675-3,960</td></tr>
+<tr class="total-row"><td><strong>Projected total</strong></td><td class="amount"><strong>~$4,694-5,979</strong></td></tr>
+<tr><td>Budget</td><td class="amount">$6,000-7,000</td></tr>
+<tr style="background: var(--green-light);"><td><strong>Cushion</strong></td><td class="amount" style="color: var(--green);"><strong>~$1,000-2,300</strong></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="section-title">Wedding Fund Status</div>
+<div class="card">
+<table class="budget-table">
+<tbody>
+<tr><td>Remaining committed + estimated expenses</td><td class="amount">~$3,600-4,885</td></tr>
+<tr><td>Ongoing paycheck deposits</td><td class="amount">TBD — wedding fund gets priority through July</td></tr>
+</tbody>
+</table>
+<p class="note">Wedding fund is healthy. With ongoing deposits through July, the budget is covered even at the high end of estimates. A family gift was split between the wedding fund and emergency savings.</p>
+</div>
+
+</div>
+
+<!-- ============ FOOD & DRINKS ============ -->
+<div class="page" id="page-food">
+
+<div class="section-title food">Food &amp; Beverage Plan</div>
+<div class="card">
+<p class="note">Flow: arrival snacks + grazing table (4:30) &rarr; dinner (~5:30) &rarr; dessert (~7:00) &rarr; drinks all night</p>
+<br>
+<table class="food-table">
+<thead><tr><th>Item</th><th>Qty (~100)</th><th>Notes</th><th>When to Buy</th></tr></thead>
+<tbody>
+<tr><td>Spanakopita / appetizer bites</td><td>4-5 boxes</td><td>Oven or chafing dish</td><td>Day before</td></tr>
+<tr><td>Rotisserie chickens</td><td>20-25</td><td>Pre-cooked; chafing dishes</td><td>Day of (AM)</td></tr>
+<tr><td>Lasagna / pasta trays</td><td>6-8 trays</td><td>Reheat in oven or chafer</td><td>Day before</td></tr>
+<tr><td>Caesar salad kits</td><td>6-8 bags</td><td>Toss day-of</td><td>Day before</td></tr>
+<tr><td>Dinner rolls / bread</td><td>4-5 bags</td><td>No prep</td><td>Day before</td></tr>
+<tr><td>Veggie platter</td><td>4-5 trays</td><td>Pre-made, chill</td><td>Day before</td></tr>
+<tr><td>Fruit platter</td><td>4-5 trays</td><td>Pre-made</td><td>Day before</td></tr>
+<tr><td>Cheese &amp; charcuterie</td><td>3-4 boards</td><td>Grazing table, room temp</td><td>Day before</td></tr>
+<tr><td>Crackers + bread</td><td>4-5 boxes</td><td>Pair with cheese + dips</td><td>Day before</td></tr>
+<tr><td>Dips (hummus, tzatziki)</td><td>3-4 containers</td><td>Keep cold until setup</td><td>Day before</td></tr>
+<tr><td>Plates, napkins, utensils</td><td>150+ sets</td><td>Go heavy, you'll run out</td><td>2 weeks before</td></tr>
+<tr><td>Wine (red + white)</td><td>25-30 bottles</td><td>~2 glasses/person</td><td>1 week before</td></tr>
+<tr><td>Beer (cases)</td><td>8-12 cases</td><td>Coors Light, Bud Light, 1 local craft light</td><td>1 week before</td></tr>
+<tr><td>Prosecco</td><td>TBD</td><td>For toasting</td><td>1 week before</td></tr>
+<tr><td>Sparkling water / sodas</td><td>3-4 cases</td><td>Non-alcoholic options</td><td>1 week before</td></tr>
+<tr><td>Coffee</td><td>TBD</td><td>Urn, cold brew, or skip</td><td>1 week before</td></tr>
+<tr><td>Sandwich platters (Costco)</td><td>TBD</td><td>Additional snack option</td><td>Day before</td></tr>
+<tr><td>Mac and cheese (Costco)</td><td>TBD</td><td>Crowd-pleaser, chafing dish</td><td>Day before</td></tr>
+<tr><td>Rice &amp; veggie vegan dish</td><td>TBD</td><td>Vegan option from Costco</td><td>Day before</td></tr>
+<tr><td>Tortellini salad (Costco)</td><td>TBD</td><td>Cold pasta salad option</td><td>Day before</td></tr>
+<tr><td>Additional salad</td><td>TBD</td><td>Beyond Caesar, variety</td><td>Day before</td></tr>
+<tr><td>Additional fruit</td><td>TBD</td><td>Supplement fruit platters</td><td>Day before</td></tr>
+<tr><td>Ice</td><td>150-200 lbs</td><td>Drinks + food safety — assign someone</td><td>Day of (AM)</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="section-title">Beverages</div>
+<div class="card">
+<h3>Beer Plan</h3>
+<ul>
+  <li>Canned light beers only — Coors Light, Bud Light, 1 local craft light</li>
+  <li>Prosecco for toasting</li>
+  <li>Sparkling water / sodas for non-drinkers</li>
+</ul>
+<h3>Still to Decide</h3>
+<ul>
+  <li>How much beer to buy (~2-3 per person over 4-5 hrs?)</li>
+  <li>How many bottles of prosecco for toasts</li>
+  <li>Ice quantity — chest freezer changes the math</li>
+</ul>
+</div>
+
+<div class="section-title">Grazing Table</div>
+<div class="card">
+<ul>
+  <li>Artisan cheeses, crackers, charcuterie, fruit, nuts, dips, olives, honey</li>
+  <li>Varying heights (boards, stands, crates) for visual interest</li>
+  <li>Keep in shade — cheese melts fast in July</li>
+  <li>Assign 1 person to set up and refresh during the party</li>
+</ul>
+</div>
+
+<div class="section-title">Chafing Dish &amp; Ice Logistics</div>
+<div class="card">
+<h3>Chafing Dishes</h3>
+<ul>
+  <li>6-8 full-size units (rent or disposable aluminum)</li>
+  <li>Pre-heat 30 min before service</li>
+  <li>Hot food above 140F, cold below 40F — bring a food thermometer</li>
+  <li>Sterno fuel: 2-3 boxes + spare</li>
+</ul>
+<h3>Ice &amp; Refrigeration Plan</h3>
+<ul>
+  <li>2x 150qt coolers — in hand for drinks on the day</li>
+  <li>Used chest freezer (FB Marketplace, TBD) — ice stockpile, plugged into generator by tents</li>
+  <li>Used fridge (FB Marketplace, TBD) — cold apps/food, in garage</li>
+  <li>Buy and stockpile ice in freezer + fridge in the days leading up</li>
+  <li>Assign 1 person as ice + cooler lead — manages refills all night</li>
+</ul>
+<h3>Food Replenishment</h3>
+<ul>
+  <li>Assign 1-2 food leads — monitor and replenish throughout night</li>
+  <li>Brief them: where food is stored, what order to bring things out</li>
+  <li>Key moments: snacks to dinner transition, dessert, late-night refresh</li>
+</ul>
+<h3>Food Cleanup (Evening Of)</h3>
+<ul>
+  <li>Decide: what happens to leftover food at end of night?</li>
+  <li>Clear food service area before late-night fire/hangout phase</li>
+  <li>Assign 1-2 people to handle food breakdown (separate from cleanup lead)</li>
+  <li>Food safety: anything out 2+ hours in summer heat should be tossed</li>
+</ul>
+</div>
+
+<div class="section-title">Coffee &amp; Dessert</div>
+<div class="card">
+<h3>Coffee</h3>
+<ul>
+  <li>Options: large coffee urn (30-60 cup), cold brew concentrate + pitchers, or skip</li>
+  <li>If yes: regular + decaf, cream/sugar station, assign someone to manage</li>
+</ul>
+<h3>Dessert</h3>
+<ul>
+  <li>Exploring: local bakery items and/or Costco sheet cake(s)</li>
+  <li>Decision TBD</li>
+</ul>
+</div>
+
+</div>
+
+<!-- ============ VENUE & DECOR ============ -->
+<div class="page" id="page-venue">
+
+<div class="section-title">Property Layout</div>
+<div class="card">
+<h3>Map the Property</h3>
+<ul>
+  <li>Ceremony area, tent/reception area, parking, porta potties (downwind), trash station, fire pit, yard games zone, photo booth</li>
+  <li>Get aerial view and overlay tent placements + table layout</li>
+</ul>
+<h3>Ceremony Area</h3>
+<ul>
+  <li>Decide exact spot — consider sun angle at 4 PM in July, wind, noise</li>
+  <li>Mark with signage or florals on the day</li>
+</ul>
+<h3>Table Layout</h3>
+<ul>
+  <li>90-100 guests</li>
+  <li>Long family tables vs. rounds, head table, kids table</li>
+  <li>Food/grazing table, bar table, gift/card table, dessert table</li>
+  <li>Clear pathways to food and restrooms</li>
+  <li>Map food placement per table — serving flow and replenishment access</li>
+</ul>
+<h3>Dance Floor &amp; Rugs</h3>
+<ul>
+  <li>Level ground, away from water</li>
+  <li>Outdoor rugs to define the space</li>
+  <li>Speaker placement nearby</li>
+</ul>
+</div>
+
+<div class="section-title">Decor &amp; Lighting</div>
+<div class="card">
+<h3>Decor Plan</h3>
+<ul>
+  <li>Inventory: what you have, borrowing, and need to buy</li>
+  <li>Centerpieces, ceremony backdrop/arch, signage, tablecloths/runners, candles/lanterns, florals</li>
+</ul>
+<h3>Lighting</h3>
+<ul>
+  <li>Tent lights rented (done)</li>
+  <li>String lights on trees, candles/votives on tables, pathway lighting, fire pit</li>
+</ul>
+<h3>Favors</h3>
+<ul>
+  <li>Ideas: local honey, seed packets, small candles, jam</li>
+  <li>Take-one display near exit or on tables</li>
+</ul>
+</div>
+
+<div class="section-title">Entertainment</div>
+<div class="card">
+<h3>Playlists (4 needed)</h3>
+<ul>
+  <li>Ceremony — processional, recessional, prelude</li>
+  <li>Cocktail/snack hour — upbeat, not too loud</li>
+  <li>Dinner — mellow, conversational</li>
+  <li>Evening/dancing — higher energy</li>
+</ul>
+<p class="sub">Download playlists to old phone, connect via Bluetooth to speaker. Consider adding a microphone for announcements/toasts. Assign someone to manage music day-of.</p>
+<h3>Yard Games</h3>
+<ul><li>Cornhole, bocce, horseshoes, giant Jenga, KanJam, lawn bowling</li></ul>
+<h3>Photo Booth &amp; Guest Photo Album</h3>
+<ul>
+  <li>Old iPhone on a mount, shaded spot, fun background</li>
+  <li>Booth app for auto-capture</li>
+  <li>Guest photo album: QR code for guests to upload photos from their phones (no app needed)</li>
+  <li>Live slideshow on TV/monitor near tents — photos appear in real time</li>
+  <li>Evaluating services: options at $49-100 range with live slideshow, moderation tools, and post-event download</li>
+  <li>Test full chain day before: phone upload, slideshow on screen</li>
+</ul>
+<h3>Flowers</h3>
+<ul>
+  <li>Sunflowers with greenery and fillers</li>
+  <li>Possibly delegate arrangements to a friend</li>
+  <li>Decide: DIY bouquets + table arrangements, or just table?</li>
+</ul>
+<h3>Fun Tech Ideas (Brainstorm)</h3>
+<ul>
+  <li><strong>AI DJ Booth:</strong> Laptop with agent connected to Spotify — guests request songs via QR code, agent checks vibe fit and queues with witty confirmation</li>
+  <li><strong>AI Guestbook Interviewer:</strong> Tablet station where guests have a 60-second AI conversation — fun questions, compiled into a keepsake doc after</li>
+  <li><strong>QR Code Jukebox:</strong> Simpler version — QR codes on table cards link to request form, queue displayed on screen</li>
+  <li><strong>AI Dance Visualizer:</strong> Screen near dance floor with animated characters reacting to music tempo and energy</li>
+  <li><strong>AI Wedding Commentator:</strong> ESPN-style live commentary screen with AI-generated quips about the party</li>
+</ul>
+</div>
+
+<div class="section-title">Gear &amp; Equipment</div>
+<div class="card">
+<h3>Quiet Generator</h3>
+<ul>
+  <li>Renting from Home Depot — 3000W inverter, ~$75/day x2 days</li>
+  <li>Book online ~50 days out (around June 5)</li>
+  <li>Get outdoor-rated extension cords (2x 50ft minimum)</li>
+</ul>
+<h3>Speakers</h3>
+<ul>
+  <li>2 outdoor speakers — tested, sound good</li>
+  <li>Test full chain (generator + speakers + playlist) 1 week before</li>
+</ul>
+<h3>Porta Potties</h3>
+<ul>
+  <li>Booked — 2-3 units</li>
+  <li>Delivery day before, pickup day after. Confirm handwashing station.</li>
+</ul>
+<h3>Refrigeration</h3>
+<ul>
+  <li>2x 150qt coolers — in hand for drinks</li>
+  <li>Used chest freezer (FB Marketplace) — ice stockpile, by tents on generator</li>
+  <li>Used fridge (FB Marketplace) — cold apps/food in garage</li>
+  <li>Buy and stockpile ice in days leading up; transport cold items day-of</li>
+</ul>
+</div>
+
+</div>
+
+<!-- ============ PACKING LISTS ============ -->
+<div class="page" id="page-packing">
+
+<div class="section-title">Packing Bins</div>
+<p style="font-size: 0.92rem; color: var(--muted); margin-bottom: 16px;">Everything gets packed into labeled bins the day before. Morning-of, the crew just unloads and sets up. Click any bin to expand.</p>
+
+<div class="accordion" onclick="toggleAcc(this)">
+  <div class="accordion-header"><span class="acc-title">Bin 1: AV &amp; Tech</span><span class="acc-meta"><span class="acc-count">9 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><p class="sub">Pack night before. AV lead sets up at 9:00 AM.</p><ul class="checklist"><li><span class="check">&#9744;</span> Quiet generator (rented)</li><li><span class="check">&#9744;</span> Outdoor extension cords (2x 50ft)</li><li><span class="check">&#9744;</span> Speakers (tested, in hand)</li><li><span class="check">&#9744;</span> Speaker cables / connectors</li><li><span class="check">&#9744;</span> Old phone with playlists downloaded offline</li><li><span class="check">&#9744;</span> Bluetooth pairing tested with speakers</li><li><span class="check">&#9744;</span> Microphone (for toasts/announcements)</li><li><span class="check">&#9744;</span> Power strip / surge protector</li><li><span class="check">&#9744;</span> Backup phone charger / power bank</li></ul></div>
+</div>
+
+<div class="accordion" onclick="toggleAcc(this)">
+  <div class="accordion-header"><span class="acc-title">Bin 2: Photo Booth &amp; Guest Album</span><span class="acc-meta"><span class="acc-count">10 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Old iPhone for photo booth + mount/tripod</li><li><span class="check">&#9744;</span> Booth app installed and tested</li><li><span class="check">&#9744;</span> Fun background (banner, string lights, florals)</li><li><span class="check">&#9744;</span> Props (optional)</li><li><span class="check">&#9744;</span> Printed QR code signs — guest photo upload</li><li><span class="check">&#9744;</span> Monitor/TV for live slideshow under tent</li><li><span class="check">&#9744;</span> HDMI cable or Chromecast / Apple TV</li><li><span class="check">&#9744;</span> Phone/device feeding slideshow</li><li><span class="check">&#9744;</span> Power cable for monitor</li><li><span class="check">&#9744;</span> Charger / power bank for booth phone</li></ul></div>
+</div>
+
+<div class="accordion" onclick="toggleAcc(this)">
+  <div class="accordion-header"><span class="acc-title">Bin 3: Ceremony</span><span class="acc-meta"><span class="acc-count">8 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Printed vows (2 copies each + phone backup)</li><li><span class="check">&#9744;</span> Vows sign (keepsake/decor piece)</li><li><span class="check">&#9744;</span> Ceremony arch / backdrop</li><li><span class="check">&#9744;</span> Ceremony florals / arrangements</li><li><span class="check">&#9744;</span> Aisle markers or signage</li><li><span class="check">&#9744;</span> Marriage license (get in June!)</li><li><span class="check">&#9744;</span> Pen for signing license</li><li><span class="check">&#9744;</span> Tissues</li></ul></div>
+</div>
+
+<div class="accordion" onclick="toggleAcc(this)">
+  <div class="accordion-header"><span class="acc-title">Bin 4: Tablecloths &amp; Decor</span><span class="acc-meta"><span class="acc-count">12 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Tablecloths / runners for all tables</li><li><span class="check">&#9744;</span> Table centerpieces</li><li><span class="check">&#9744;</span> Candles / battery-powered votives</li><li><span class="check">&#9744;</span> Welcome sign</li><li><span class="check">&#9744;</span> Seating chart / table assignment sign</li><li><span class="check">&#9744;</span> Menu sign / food labels</li><li><span class="check">&#9744;</span> Bar sign / drink labels</li><li><span class="check">&#9744;</span> Gift/card table sign + card box</li><li><span class="check">&#9744;</span> No gifts / no registry sign</li><li><span class="check">&#9744;</span> Borrowed decor items (track separately)</li><li><span class="check">&#9744;</span> Weights / clips for wind</li><li><span class="check">&#9744;</span> Tape, zip ties, scissors, twine</li></ul></div>
+</div>
+
+<div class="accordion" onclick="toggleAcc(this)">
+  <div class="accordion-header"><span class="acc-title">Bin 5: Plates, Napkins &amp; Utensils</span><span class="acc-meta"><span class="acc-count">9 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><p class="sub">Buy 2 weeks before. Count: 150+ of everything.</p><ul class="checklist"><li><span class="check">&#9744;</span> Dinner plates</li><li><span class="check">&#9744;</span> Dessert / appetizer plates</li><li><span class="check">&#9744;</span> Cups</li><li><span class="check">&#9744;</span> Wine glasses (if not using cups)</li><li><span class="check">&#9744;</span> Napkins (dinner + cocktail size)</li><li><span class="check">&#9744;</span> Forks, knives, spoons</li><li><span class="check">&#9744;</span> Serving spoons / tongs / spatulas</li><li><span class="check">&#9744;</span> Serving platters / trays</li><li><span class="check">&#9744;</span> Cutting boards for grazing table</li></ul></div>
+</div>
+
+<div class="accordion" onclick="toggleAcc(this)">
+  <div class="accordion-header"><span class="acc-title">Bin 6: Grazing Table</span><span class="acc-meta"><span class="acc-count">6 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Large boards / platters (varying sizes)</li><li><span class="check">&#9744;</span> Elevated stands / crates for height</li><li><span class="check">&#9744;</span> Small serving bowls for dips, olives, nuts</li><li><span class="check">&#9744;</span> Cheese knives / spreaders</li><li><span class="check">&#9744;</span> Small signs / labels</li><li><span class="check">&#9744;</span> Serving tongs / picks</li></ul></div>
+</div>
+
+<div class="accordion" onclick="toggleAcc(this)">
+  <div class="accordion-header"><span class="acc-title">Bin 7: Bar &amp; Drinks Setup</span><span class="acc-meta"><span class="acc-count">7 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Bottle openers / wine openers (multiple)</li><li><span class="check">&#9744;</span> Ice buckets / tubs for bottles</li><li><span class="check">&#9744;</span> Drink napkins</li><li><span class="check">&#9744;</span> Drink cups</li><li><span class="check">&#9744;</span> Coolers for beer + white wine (2x 150qt — in hand)</li><li><span class="check">&#9744;</span> Bar table: tablecloth + signage</li><li><span class="check">&#9744;</span> Non-alcoholic option signage</li></ul></div>
+</div>
+
+<div class="accordion" onclick="toggleAcc(this)">
+  <div class="accordion-header"><span class="acc-title">Bin 8: Hot Food Supplies</span><span class="acc-meta"><span class="acc-count">8 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Chafing dishes (6-8 full-size)</li><li><span class="check">&#9744;</span> Sterno fuel cans (2-3 boxes + spares)</li><li><span class="check">&#9744;</span> Lighter / long matches</li><li><span class="check">&#9744;</span> Serving utensils for each dish</li><li><span class="check">&#9744;</span> Food thermometer</li><li><span class="check">&#9744;</span> Aluminum foil</li><li><span class="check">&#9744;</span> Oven mitts / heat-resistant gloves</li><li><span class="check">&#9744;</span> Food labels / warming labels</li></ul></div>
+</div>
+
+<div class="accordion" onclick="toggleAcc(this)">
+  <div class="accordion-header"><span class="acc-title">Bin 9: Games &amp; Activities</span><span class="acc-meta"><span class="acc-count">6 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Cornhole boards + bags</li><li><span class="check">&#9744;</span> Bocce set</li><li><span class="check">&#9744;</span> Horseshoes</li><li><span class="check">&#9744;</span> Giant Jenga</li><li><span class="check">&#9744;</span> KanJam</li><li><span class="check">&#9744;</span> Any other games</li></ul></div>
+</div>
+
+<div class="accordion" onclick="toggleAcc(this)">
+  <div class="accordion-header"><span class="acc-title">Bin 10: Fire Pit &amp; Lighting</span><span class="acc-meta"><span class="acc-count">7 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Firewood (buy 1-2 days before)</li><li><span class="check">&#9744;</span> Fire starter / kindling</li><li><span class="check">&#9744;</span> Lighter / long matches</li><li><span class="check">&#9744;</span> Extra string lights</li><li><span class="check">&#9744;</span> Pathway lights / luminaries</li><li><span class="check">&#9744;</span> Extension cords for lights</li><li><span class="check">&#9744;</span> Candle lighters for table candles</li></ul></div>
+</div>
+
+<div class="accordion" onclick="toggleAcc(this)">
+  <div class="accordion-header"><span class="acc-title">Bin 11: Trash &amp; Cleanup</span><span class="acc-meta"><span class="acc-count">8 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Large trash bags (2 boxes)</li><li><span class="check">&#9744;</span> Recycling bags</li><li><span class="check">&#9744;</span> Compost bags</li><li><span class="check">&#9744;</span> Printed station signs: TRASH / RECYCLING / COMPOST</li><li><span class="check">&#9744;</span> Tape or stands for signs</li><li><span class="check">&#9744;</span> Extra paper towels</li><li><span class="check">&#9744;</span> Spray cleaner for spills</li><li><span class="check">&#9744;</span> Staging area identified for full bags</li></ul></div>
+</div>
+
+<div class="accordion" onclick="toggleAcc(this)">
+  <div class="accordion-header"><span class="acc-title">Bin 12: Emergency Kit</span><span class="acc-meta"><span class="acc-count">14 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Safety pins (various sizes)</li><li><span class="check">&#9744;</span> Stain remover pen (Tide To Go)</li><li><span class="check">&#9744;</span> Ibuprofen + acetaminophen</li><li><span class="check">&#9744;</span> Band-aids + basic first aid</li><li><span class="check">&#9744;</span> Phone chargers + power bank</li><li><span class="check">&#9744;</span> Needle and thread (gown + suit colors)</li><li><span class="check">&#9744;</span> Double-sided tape / fashion tape</li><li><span class="check">&#9744;</span> Baby wipes</li><li><span class="check">&#9744;</span> Antacids / Pepto</li><li><span class="check">&#9744;</span> Sunscreen</li><li><span class="check">&#9744;</span> Bug spray</li><li><span class="check">&#9744;</span> Extra bobby pins + hair ties</li><li><span class="check">&#9744;</span> Sharpie + scissors</li><li><span class="check">&#9744;</span> ABC fire extinguisher</li></ul></div>
+</div>
+
+<!-- DAY-OF CHECKLISTS -->
+<div class="section-title food" style="margin-top: 36px;">Day-Of Checklists</div>
+
+<div class="accordion" onclick="toggleAcc(this)">
+  <div class="accordion-header"><span class="acc-title">Cold Food (prep day before)</span><span class="acc-meta"><span class="acc-count">10 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><p class="sub">Store in coolers or fridge overnight. Transport cold morning-of.</p><ul class="checklist"><li><span class="check">&#9744;</span> Caesar salad kits (6-8 bags) — toss day-of</li><li><span class="check">&#9744;</span> Veggie platters (4-5 trays)</li><li><span class="check">&#9744;</span> Fruit platters (4-5 trays)</li><li><span class="check">&#9744;</span> Cheese &amp; charcuterie (3-4 boards)</li><li><span class="check">&#9744;</span> Dips: hummus, tzatziki (3-4 containers)</li><li><span class="check">&#9744;</span> Additional salad (TBD)</li><li><span class="check">&#9744;</span> Tortellini salad from Costco (TBD)</li><li><span class="check">&#9744;</span> Additional fruit (TBD)</li><li><span class="check">&#9744;</span> Sandwich platters from Costco (TBD)</li><li><span class="check">&#9744;</span> Crackers + bread for grazing (4-5 boxes)</li></ul></div>
+</div>
+
+<div class="accordion" onclick="toggleAcc(this)">
+  <div class="accordion-header"><span class="acc-title">Hot Food (morning of)</span><span class="acc-meta"><span class="acc-count">6 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><p class="sub">Pick up morning-of or heat on-site / at nearby kitchen.</p><ul class="checklist"><li><span class="check">&#9744;</span> Rotisserie chickens (20-25) — pick up AM, chafing dishes</li><li><span class="check">&#9744;</span> Lasagna / pasta trays (6-8) — reheat</li><li><span class="check">&#9744;</span> Spanakopita / appetizer bites (4-5 boxes)</li><li><span class="check">&#9744;</span> Mac and cheese from Costco (TBD)</li><li><span class="check">&#9744;</span> Rice &amp; veggie vegan dish (TBD)</li><li><span class="check">&#9744;</span> Dinner rolls / bread (4-5 bags)</li></ul></div>
+</div>
+
+<div class="accordion" onclick="toggleAcc(this)">
+  <div class="accordion-header"><span class="acc-title">Ice &amp; Coolers (morning of)</span><span class="acc-meta"><span class="acc-count">5 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><p class="sub">Assign to ice lead. Pick up by 10:00 AM.</p><ul class="checklist"><li><span class="check">&#9744;</span> 150-200 lbs of ice</li><li><span class="check">&#9744;</span> Drink coolers packed: beer, white wine, sparkling water, sodas</li><li><span class="check">&#9744;</span> Food safety coolers: salads, fruit, dips, charcuterie</li><li><span class="check">&#9744;</span> Ice for bar / ice buckets</li><li><span class="check">&#9744;</span> Backup ice source identified</li></ul></div>
+</div>
+
+<div class="accordion" onclick="toggleAcc(this)">
+  <div class="accordion-header"><span class="acc-title">Alcohol (buy 1 week before)</span><span class="acc-meta"><span class="acc-count">6 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Coors Light (cases TBD)</li><li><span class="check">&#9744;</span> Bud Light (cases TBD)</li><li><span class="check">&#9744;</span> 1 local craft light beer (cases TBD)</li><li><span class="check">&#9744;</span> Prosecco for toasting</li><li><span class="check">&#9744;</span> Sparkling water (3-4 cases)</li><li><span class="check">&#9744;</span> Sodas (1-2 cases)</li></ul></div>
+</div>
+
+<div class="accordion" onclick="toggleAcc(this)">
+  <div class="accordion-header"><span class="acc-title">Flowers (day before or morning of)</span><span class="acc-meta"><span class="acc-count">8 items</span><span class="acc-arrow">&#9662;</span></span></div>
+  <div class="accordion-body"><ul class="checklist"><li><span class="check">&#9744;</span> Sunflowers — quantity TBD</li><li><span class="check">&#9744;</span> Greenery / fillers — quantity TBD</li><li><span class="check">&#9744;</span> Vases / containers for arrangements</li><li><span class="check">&#9744;</span> Floral tape / wire / scissors</li><li><span class="check">&#9744;</span> Confirm with friend (if she's arranging)</li><li><span class="check">&#9744;</span> Bouquet(s) — decide if DIY</li><li><span class="check">&#9744;</span> Ceremony spot florals</li><li><span class="check">&#9744;</span> Table arrangements — how many tables?</li></ul></div>
+</div>
+
+</div>
+
+<!-- ============ DAY-OF ============ -->
+<div class="page" id="page-dayof">
+
+<div class="section-title priorities">Day-of Schedule</div>
+<div class="card">
+<table class="sched-table">
+<tr><td class="time">8:00 AM</td><td>Setup crew — tent layout, tables, chairs, decor, signage</td></tr>
+<tr><td class="time">9:00 AM</td><td>AV lead — generator, speakers, sound test, photo booth</td></tr>
+<tr><td class="time">10:00 AM</td><td>Food crew — store pickup, food prep, grazing table</td></tr>
+<tr><td class="time">11:00 AM</td><td>Food crew — chafing dishes, sterno, serving station</td></tr>
+<tr><td class="time">12:00 PM</td><td>Ice lead — pick up ice, pack coolers</td></tr>
+<tr><td class="time">1:00 PM</td><td>All helpers — final walk-through, yard games out</td></tr>
+<tr><td class="time">2:00 PM</td><td>Get dressed, family photos</td></tr>
+<tr><td class="time">3:30 PM</td><td>Close family gathers for private ceremony</td></tr>
+<tr><td class="time">4:00 PM</td><td>Ceremony — close family only, ~30 min</td></tr>
+<tr><td class="time">4:30 PM</td><td>Guests arrive — snacks + drinks out</td></tr>
+<tr><td class="time">5:30 PM</td><td>Dinner service</td></tr>
+<tr><td class="time">7:00 PM</td><td>Dessert + coffee</td></tr>
+<tr><td class="time">Dusk</td><td>Fire pit lit, string lights on</td></tr>
+<tr><td class="time">9:30 PM</td><td>Cleanup begins</td></tr>
+</table>
+</div>
+
+<div class="section-title">Roles to Assign</div>
+<div class="card">
+<ul>
+  <li><strong>Setup lead</strong> — owns morning setup flow</li>
+  <li><strong>Food + catering lead</strong> (2 people) — chafing dishes, warming, serving, replenishment</li>
+  <li><strong>Drinks lead</strong> — coolers, ice, restocking</li>
+  <li><strong>AV + tech lead</strong> — generator, speakers, playlist, photo booth</li>
+  <li><strong>Ice lead</strong> — morning pickup, cooler management</li>
+  <li><strong>Grazing table lead</strong> — setup and refresh</li>
+  <li><strong>Cleanup lead</strong> — end-of-night teardown</li>
+  <li><strong>Weather watcher</strong> — NOAA check every 30 min</li>
+</ul>
+</div>
+
+<div class="section-title">Storm Plan</div>
+<div class="card">
+<p>No indoor backup. Tents are the plan: one 20x40, one 10x20, two 10x10 = 1,200 sq ft total. Fits 90-100 seated.</p>
+<h3>Risk Levels</h3>
+<ul>
+  <li><strong>Light rain:</strong> Tents handle it. Keep going.</li>
+  <li><strong>Heavy rain:</strong> Move under tents, close sides.</li>
+  <li><strong>Thunder/lightning:</strong> Shelter, pause until it passes.</li>
+  <li><strong>Major storm:</strong> Monitor conditions. Consider postponing if severe.</li>
+</ul>
+<h3>Prep</h3>
+<ul>
+  <li>Confirm tent sides are in the rental</li>
+  <li>Weather monitoring from 10 days out; go/no-go at 48 hours</li>
+  <li>Assign weather watcher day-of</li>
+  <li>Secure lightweight decor (weights, clips, stakes)</li>
+</ul>
+</div>
+
+<div class="section-title">Emergency Kit</div>
+<div class="card">
+<p>Safety pins, Tide To Go, pain relievers, band-aids, phone chargers + power bank, needle &amp; thread, fashion tape, baby wipes, antacids, sunscreen, bug spray, bobby pins, hair ties, Sharpie</p>
+</div>
+
+</div>
+
+<!-- ============ TIMELINE ============ -->
+<div class="page" id="page-timeline">
+
+<div class="section-title">Month-by-Month</div>
+<div class="card">
+<table class="timeline-table">
+<tr><td class="month">March</td><td>Send invitations (website first) &middot; Book porta potties &middot; Hotel block &middot; Wedding bands &middot; Nick's suit &middot; Research generator + speakers &middot; Draft food list</td></tr>
+<tr><td class="month">April</td><td>Confirm hotel &middot; Reserve generator + speakers &middot; Suit fittings &middot; Gown fitting &middot; Map property + ceremony area &middot; Table layout &middot; Decide favors</td></tr>
+<tr><td class="month">May</td><td>RSVP deadline (May 31) &middot; Finalize food list &middot; Chafing dishes &middot; Ice + fridge plan &middot; Day-of schedule + roles &middot; Write vows &middot; Build playlists &middot; Plan night-before + brunch</td></tr>
+<tr><td class="month">June</td><td>Marriage license &middot; Final headcount &middot; Final food + alcohol order &middot; Confirm all rentals &middot; Final gown fitting &middot; Decor + borrowed items &middot; Test AV &middot; Build emergency kit &middot; Book generator rental (~June 5)</td></tr>
+<tr><td class="month">Jul 1-24</td><td>Store run (2 days before) &middot; Ice + firewood (morning of) &middot; Weather go/no-go (48 hrs) &middot; Delegate setup &middot; Pack overnight bag</td></tr>
+<tr><td class="month" style="color: var(--accent);">Jul 25</td><td style="color: var(--accent); font-weight: 600;">Ceremony ~4:00 PM &middot; Party 4:30-9:30 PM</td></tr>
+</table>
+</div>
+
+<div class="section-title">Attire &amp; Personal</div>
+<div class="card">
+<h3>Nick's Suit</h3>
+<ul>
+  <li>Order this month — allow time for tailoring</li>
+  <li>Confirm fit 4-6 weeks before (late June)</li>
+</ul>
+<h3>Jamie's Shoes</h3>
+<ul><li>Order soon — allow time to break them in</li></ul>
+<h3>Jewelry</h3>
+<ul>
+  <li>Finalize what Jamie's wearing</li>
+  <li>Check if anything is borrowed</li>
+</ul>
+<h3>Vows</h3>
+<ul>
+  <li>Start drafting — revise several times</li>
+  <li>Traditional, personal, or a mix?</li>
+  <li>Print final copies + phone backup</li>
+  <li>Idea: print vows on a sign as a keepsake/decor piece</li>
+</ul>
+</div>
+
+<div class="section-title">Events Around the Wedding</div>
+<div class="card">
+<h3>Night Before</h3>
+<ul><li>Casual dinner or gathering — keep low-key. Confirm who's on-site, assign morning tasks.</li></ul>
+<h3>Late-Night Fires</h3>
+<ul><li>Fire pit as the post-party hangout. S'mores bar? Wind-down playlist. Stockpile firewood in advance.</li></ul>
+<h3>Brunch After</h3>
+<ul><li>Host at home, local restaurant, or potluck. Keep it simple.</li></ul>
+<h3>Family Sleeping</h3>
+<ul><li>Map out who sleeps where night before and night of. Coordinate hotel rooms.</li></ul>
+<h3>Night of Wedding</h3>
+<ul><li>Delegate cleanup explicitly. Pack overnight bag night before.</li></ul>
+</div>
+
+<div class="section-title">Hotel Accommodations</div>
+<div class="card">
+<h3>Recommended Hotels (~10-15 min from venue)</h3>
+<ul>
+  <li><strong>Hotel A</strong> — Brand new (2025), top-rated. Extended stay but fine for 1-2 nights. Top pick.</li>
+  <li><strong>Hotel B</strong> — Solid reviews, clean, friendly staff. Good fallback.</li>
+  <li><strong>Hotel C</strong> — Good breakfast, pool, free parking.</li>
+  <li><strong>Hotel D</strong> (~15 min) — Top-rated in area, free breakfast + pool. Great value.</li>
+</ul>
+<p class="note">Still working with hotel rep for a formal block (15-20 rooms). May pivot to just recommendations. Follow up 6 weeks before to check pickup.</p>
+</div>
+
 </div>
 
 </div><!-- end .wrap -->
 
 <script>
 // Countdown
-var wedding = new Date('2026-07-25T16:00:00');
-var now = new Date();
-var days = Math.ceil((wedding - now) / (1000 * 60 * 60 * 24));
-document.getElementById('countdown').textContent = days + ' days to go';
+const wedding = new Date('2026-07-25T16:00:00');
+function updateCountdown() {
+  const now = new Date();
+  const days = Math.ceil((wedding - now) / (1000 * 60 * 60 * 24));
+  document.getElementById('countdown').textContent = days + ' days to go';
+}
+updateCountdown();
+
+// Accordion toggle
+function toggleAcc(el) {
+  el.classList.toggle('open');
+}
+
+// Page navigation
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// Checklist filter
+function filterRows(filter, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#checklist-table tbody tr').forEach(row => {
+    const status = row.dataset.status;
+    const owner = row.dataset.owner;
+    if (filter === 'all') { row.style.display = ''; return; }
+    if (filter === 'nick') { row.style.display = (owner === 'nick' || owner === 'both') ? '' : 'none'; return; }
+    if (filter === 'jamie') { row.style.display = (owner === 'jamie' || owner === 'both') ? '' : 'none'; return; }
+    row.style.display = status === filter ? '' : 'none';
+  });
+}
 </script>
 </body>
 </html>
